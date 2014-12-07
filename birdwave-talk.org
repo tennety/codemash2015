@@ -1,0 +1,147 @@
+* TODO Write the Why Clojure slides
+** Include transit
+* TODO Write "a brief introduction to lisps"
+** code examples in js that transform to lisp
+* TODO Write React/Om overview
+
+* TODO Write core async intro
+* TODO Write a presentation framework :)
+* TODO Schedule time on company calendar
+** DONE Schedule 1/7 - 1/9
+   CLOSED: [2014-12-07 Sun 16:55]
+** TODO Schedule 7/12
+* TODO Present to Neo
+  SCHEDULED: <2014-12-12 Fri>
+
+* Intro ideas
+** We're going to throw a lot of potentially unfamiliar concepts at you today
+   This for us is part of the appeal of clojure. There is a lot of innovation
+   happening in the clojure community, and a lot of pragmatic reuse and reimagining
+   of old ideas.
+** This is an exciting time to be a software engineer. If you're willing to
+   open your mind to alternative languages there is... blah. sounds cheesy
+** Here is just a partial list of the new (to us) conepts explored during this project.
+- Immutability
+- Persistent Data Structures
+- Datalog
+- Database as a value
+- Lazy evaluation
+- Communicating Sequential Processes
+- Transit format
+- Lenses / Cursors
+- Functional DOM
+- Macros
+** Dont need to use all of these to understand clojure
+** Learn these as a side-effect of hanging around the clojure community
+* Why Clojure?
+** importing data file
+** datomic
+* Brief intro to lisps
+** LISt Processing
+** You may remember from your comp sci courses that a linked list is a data structure
+   with a head and a tail. That is, the first element is a cell with some data in it which we call 'head'
+   and a pointer to another list, which we call 'tail'
+** basic LISP syntax is extremely simple, consisting on lists only.
+** head references the function to call
+** tail contains the parameters to the function call
+** code is a tree structure made of lists which is why the dreaded trailing parens
+** mitigate with smart indentation
+** which means it is possible to write code to generate your code tree (macros) (homoiconicity)
+** evaluation of code is a depth first walk of the tree (left to right)
+** return value of a function call is the result of the last evaluated expression
+* React
+** INTRO what Chandu did with D3 and the interactive maps is amazing and D3 is a super powerful
+   library for creating visualizations but when it came time to create the controls
+   for our application we were frustrated by the same thing we're always frustrated by
+   namely the scattering around of state and the growing complexity of dealing with
+   events and coordination of state.
+** SLIDE Pure Imagination
+*** Pretend you don't know anything about the DOM or browser enfironment
+*** IMG from willy wonka?
+** SLIDE A component
+*** IMG screenshot of species filter list
+*** type to filter list
+** SLIDE Initial render
+*** Remember: Imagination Land
+*** CODE the list we want
+    (ul {:className "species-list"}
+      (li {:className "species"} (a {:href "#/taxon/1"} "Abert's Towhee"))
+      (li {:className "species"} (a {:href "#/taxon/2"} "Acadian Flycatcher"))
+      (li {:className "species"} (a {:href "#/taxon/3"} "Acorn Woodpecker"))
+      ... )
+*** CODE how we can dynamically build the list
+    (defn species-li [species]
+      (li {:className "species"} (a {:href (path species)} (:common-name species))))
+
+    (map species-li species)
+** SLIDE Interactivity
+*** User types 'star'
+*** COMMENTARY In imagination land the most straightforward way to render this list is to
+    iterate over our data, building up our list as we go. Then when the list is built
+    we replace old dom with our new representation. And our job is done
+*** CODE the list we want
+    ul({className: "species-list"},
+      li({className: "species"}, a({href: "#/taxon/27"}, "American Redstart")),
+      li({className: "species"}, a({href: "#/taxon/42"}, "Bahama Woodstar")),
+      li({className: "species"}, a({href: "#/taxon/99"}, "Common Redstart"))
+    )
+*** CODE how we can dynamically build the list
+    (map species-li
+         (filter (match-string "star") species))
+**** highlight the filter sexp
+** SLIDE Sadly we don't live in imagination land
+*** Replacing entire swaths of dom is slow
+*** Nobody does this in real life
+** SLIDE React: A better DOM
+*** Render the dom you want
+*** React takes care of the details
+*** Keeps real DOM in sync with your ideal DOM
+*** separate program state from component state
+* Om
+** SLIDE Om
+*** Builds upon React
+*** leverages immutability
+** SLIDE Simple Example
+  (defn selection-name [name owner]
+    (om/component
+      (dom/h2 #js {:className "selection-name"} name)))
+** SLIDE Example with event handler
+  (defn date-minus [model owner]
+    (om/component
+      (dom/span #js {:id "date-minus"
+                     :onClick #(update-month! model owner dec)} "-")))
+** SLIDE Loading Screen
+  (defn loading-indicator [model owner]
+    (let [loading? (not (empty? model))]
+      (om/component
+        (dom/div #js {:className (str "spinner" (when loading? " in"))}
+                 (dom/span nil "L")
+                 (dom/span nil "O")
+                 (dom/span nil "A")
+                 (dom/span nil "D")
+                 (dom/span nil "I")
+                 (dom/span nil "N")
+                 (dom/span nil "G")
+                 (dom/span nil "…")))))
+* Core Async
+** powerful channel-based asynchronous programming
+** similar to goroutines from golang
+** turns async code into sync-looking code
+** CODE
+  (defn await-taxonomy
+    "Return a channel which will receive the value of
+     :taxonomy after it has a non-empty value"
+    [model]
+    (go-loop [{:keys [taxonomy]} model]
+      (if (not-empty taxonomy)
+        taxonomy
+        (do (<! (timeout 10))
+            (recur model))))))
+** CODE
+  (go
+    (alt!
+      (await-taxonomy model)
+      (log "Located " (count model) " records")
+
+      (timeout 60000)
+      (log "Timed out waiting for data")))
