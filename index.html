@@ -4,10 +4,9 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>reveal.js - The HTML Presentation Framework</title>
+		<title>A Bird's Eye View of ClojureScript</title>
 
-		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-		<meta name="author" content="Hakim El Hattab">
+		<meta name="description" content="Slides for the CodeMash 2015 talk by Chandu Tennety and John Andrews">
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -15,10 +14,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<link rel="stylesheet" href="css/reveal.min.css">
-		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+		<link rel="stylesheet" href="css/theme/solarized.css" id="theme">
 
 		<!-- For syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<link rel="stylesheet" href="lib/css/hemisu-light.css">
 
 		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
 		<script>
@@ -43,29 +42,79 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>Reveal.js</h1>
-					<h3>HTML Presentations Made Easy</h3>
+					<h1>A Bird's Eye View of ClojureScript</h1>
+          <h3>You don't <em>have</em> to write JavaScript!</h3>
 					<p>
-						<small>Created by <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small>
+						<small>Chandu Tennety &middot; John Andrews</small>
 					</p>
-				</section>
-
-				<section>
-					<h2>Heads Up</h2>
-					<p>
-						reveal.js is a framework for easily creating beautiful presentations using HTML. You'll need a browser with
-						support for CSS 3D transforms to see it in its full glory.
-					</p>
-
 					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+            Thank you for coming to this talk, we value your time and are excited that you chose to share it with us. And we're excited to share our experiences with you and hope that you find value from them.
+            I'm Chandu, I do app development at Neo, mostly using Rails and JavaScript. This is John Andrews.
+            <!-- John introduces himself ><!-->
 					</aside>
 				</section>
 
+				<section>
+          <section>
+            <h2>Motivation</h2>
+            <ul class="task-list">
+              <li class="fragment">Birding</li>
+              <li class="fragment">Data Visualization</li>
+            </ul>
+            <aside class="notes" data-markdown>
+            ### Birding
+              * Ken's "birther" joke
+              * Observing and identifying birds, visually and by ear.
+              * Quiet and relaxing (when you have to get away from big crowds of technologists)
+              * Closely tied with migratory patterns
+            ### Dataviz
+              * Wanting to learn d3
+              * It'd be nice to plot bird migration data on a map
+            </aside>
+          </section>
+				</section>
+
+				<section>
+          <section>
+            <h2>Premise</h2>
+            <h3><a target="_blank" href="http://ebird.org/content/ebird/about/">eBird</a> data set</h3>
+            <ul class="task-list">
+              <li class="fragment">Data for 1 year for the US region</li>
+              <li class="fragment">29 GB of tab-separated values</li>
+              <li class="fragment">Nearly 1800 species</li>
+            </ul>
+            <aside class="notes" data-markdown>
+              ### eBird
+              * By National Audubon Society and Cornell Lab of Ornithology
+              * Gather bird sighting reports from all over the world (an incredible amount of data)
+              * Had a very basic API, not good for trends
+              * Data available for download free for academic use
+            </aside>
+          </section>
+          <section>
+            <h2>Premise</h2>
+            <h3>Using d3</h3>
+            <ul class="task-list">
+              <li class="fragment">Need to use JavaScript</li>
+              <li class="fragment">Handles JSON requests</li>
+            </ul>
+            <aside class="notes" data-markdown>
+            </aside>
+          </section>
+				</section>
 				<!-- Example of nested vertical slides -->
 				<section>
 					<section>
-						<h2>Vertical Slides</h2>
+						<h2>Why Clojure</h2>
+            <pre><code>
+(defn sighting-seq
+  "Return a lazy sequence of lines from filename, transformed into sighting maps"
+  [filename skip-rows nth-row]
+  (map sighting
+       (take-nth nth-row
+                 (drop (if skip-rows skip-rows 1)
+                       (line-seq (io/reader filename))))))
+            </code></pre>
 						<p>
 							Slides can be nested inside of other slides,
 							try pressing <a href="#" class="navigate-down">down</a>.
@@ -370,8 +419,8 @@ function linkify( selector ) {
 				history: true,
 				center: true,
 
-				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+				theme: "solarized", // available themes are in /css/theme
+				transition: "page", // default/cube/page/concave/zoom/linear/fade/none
 
 				// Parallax scrolling
 				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
