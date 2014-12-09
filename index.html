@@ -116,14 +116,16 @@
 
         <section>
           <h2>Why Clojure</h2>
-          <pre><code>
-  (defn sighting-seq
-    "Return a lazy sequence of lines from filename, transformed into sighting maps"
-    [filename skip-rows nth-row]
-    (map sighting
-         (take-nth nth-row
-                   (drop (if skip-rows skip-rows 1)
-                         (line-seq (io/reader filename))))))
+            <pre>
+;; Clojure
+            <code>
+(defn sighting-seq
+  "Return a lazy sequence of lines from filename, transformed into sighting maps"
+  [filename skip-rows nth-row]
+  (map sighting
+    (take-nth nth-row
+      (drop (if skip-rows skip-rows 1)
+        (line-seq (io/reader filename))))))
           </code></pre>
         </section>
 
@@ -188,7 +190,9 @@
 
           <section>
             <h2>Why ClojureScript?</h2>
-            <pre><code>
+            <pre>
+;; ClojureScript
+            <code>
 (def api-base-url (url "https://api.flickr.com/services/rest/"))
 
 (-> api-base-url
@@ -219,7 +223,91 @@
 
 
         <section>
-          <h2>d3 &mdash; A Quick Intro</h2>
+          <section>
+            <h2>d3 &mdash; A Quick Intro</h2>
+            <ul class="task_list">
+              <li class="fragment">Built around tying data with DOM (using SVG)</li>
+              <li class="fragment">Huge ecosystem solving all kinds of problems</li>
+            </ul>
+            <aside class="notes" data-markdown>
+              After that mind-trip, let's shift gears and talk about d3.
+              * Set of libraries that enable DOM manipulation based on data
+              bindings
+              * Fluent API around using functional transforms of the bound data
+              to change the state of the DOM elements
+              We'll quickly cover the parts relating to mapping.
+            </aside>
+          </section>
+
+          <section>
+            <h2>d3 &mdash; A Quick Intro</h2>
+            <h3>Scales, axes, behaviors</h3>
+            <aside class="notes" data-markdown>
+            </aside>
+          </section>
+
+          <section>
+            <h2>d3 &mdash; A Quick Intro</h2>
+            <h3>GeoJSON and TopoJSON</h3>
+            <aside class="notes" data-markdown>
+            </aside>
+          </section>
+        </section>
+
+
+        <section>
+          <section>
+            <h2>d3 and JavaScript Interop</h2>
+            <h3>Methods and Props</h3>
+            <pre>
+// JavaScript
+            <code>
+var activeState = function() {
+  return d3.select(".active");
+}
+            </code></pre>
+            <pre>
+;; ClojureScript
+            <code>
+(defn active-state [] (.select js/d3 ".active"))
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>d3 and JavaScript Interop</h2>
+            <h3>Methods and Props</h3>
+            <pre>
+// JavaScript
+            <code>
+var target = function() {
+  return d3.event.target;
+}
+            </code></pre>
+            <pre>
+;; ClojureScript
+            <code>
+(defn target [] (.-target (.-event js/d3)))
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>d3 and JavaScript Interop</h2>
+            <h3>Fluent APIs and the <code>-></code> Macro</h3>
+            <pre>
+// JavaScript
+            <code>
+var months = d3.time.scale
+               .domain([new Date(2012,10,15), new Date(2013,10,15)])
+               .range([0, 900])
+            </code></pre>
+            <pre>
+;; ClojureScript
+            <code>
+(def months ( -> (js/d3.time.scale)
+   (.domain (array (js/Date. 2012 10 15) (js/Date. 2013 10 15)))
+   (.range (array 0 900))))
+            </code></pre>
+          </section>
         </section>
       </div>
     </div>
