@@ -33,121 +33,195 @@
     <div class="reveal">
       <div class="slides">
         <section>
-        <h1>A Bird's Eye View of ClojureScript</h1>
-        <h3>Or: you don't <em>have</em> to write JavaScript!</h3>
-        <p>
-        <small>Chandu Tennety &middot; John Andrews</small>
-        </p>
-        <aside class="notes">
-        Thank you for coming to this talk, we value your time and are excited that you chose to share it with us.
-        And we're excited to share our experiences with you and hope that you find value from them.
-        I'm Chandu, I do app development at Neo, mostly using Rails and JavaScript. This is John Andrews.
-        <!-- John introduces himself ><!-->
-        </aside>
+          <h1>A Bird's Eye View of ClojureScript</h1>
+          <h3>Or: you don't <em>have</em> to write JavaScript!</h3>
+          <p>
+            <small>Chandu Tennety &middot; John Andrews</small>
+          </p>
+          <aside class="notes">
+            Thank you for coming to this talk, we value your time and are excited that you chose to share it with us.
+            And we're excited to share our experiences with you and hope that you find value from them.
+            I'm Chandu, I do app development at Neo, mostly using Rails and JavaScript. This is John Andrews.
+            <!-- John introduces himself ><!-->
+          </aside>
         </section>
 
 
         <section>
-        <h2>Motivation</h2>
-        <p>Birding: a quick introduction</p>
-        <img alt="bird" src="http://placekitten.com/g/200/300" class="fragment">
-        <img alt="map" src="http://placekitten.com/g/200/300" class="fragment">
-        <aside class="notes" data-markdown>
-        ### Birding
-        * Observing and identifying birds, visually and by ear.
-        * Quiet and relaxing (when you need to get away from big crowds of technologists)
-        * Closely tied with migratory patterns:
-        - Migration seasons are peaks
-        - Non-migratory birds are all you have in the off-season
-        * Field guides
-        - Beautiful illustrations, identifying characteristics
-        * example: *something with nice art and characteristic song*
-        - Show static maps of breeding areas during the year
-        * example: *map of the above bird*
-        * So I thought it'd be nice to plot bird migration data on a map
-        * Basically this
-        </aside>
+          <h2>Motivation</h2>
+          <h3>Birding: a quick introduction</h3>
+          <img alt="bird" src="http://placekitten.com/g/200/300" class="fragment">
+          <img alt="map" src="http://placekitten.com/g/200/300" class="fragment">
+          <aside class="notes" data-markdown>
+            ### Birding
+            * Observing and identifying birds, visually and by ear.
+            * Quiet and relaxing (when you need to get away from big crowds of technologists)
+            * Closely tied with migratory patterns:
+              - Migration seasons are peaks
+              - Non-migratory birds are all you have in the off-season
+            * Field guides
+              - Beautiful illustrations, identifying characteristics
+            * example: *something with nice art and characteristic song*
+              - Show static maps of breeding areas during the year
+            * example: *map of the above bird*
+            * So I thought it'd be nice to plot bird migration data on a map
+            * Basically this
+          </aside>
         </section>
 
 
         <section>
-        <h2>Demo &mdash; Birdwave</h2>
-        <iframe width="560" height="315" src="//www.youtube.com/embed/rzeGJavK-0o?rel=0" frameborder="0" allowfullscreen></iframe>
+          <h2>Demo &mdash; Birdwave</h2>
+          <iframe width="560" height="315" src="//www.youtube.com/embed/rzeGJavK-0o?rel=0" frameborder="0" allowfullscreen></iframe>
         </section>
 
 
         <section>
-        <section>
-        <h2>Premise &mdash; Data</h2>
-        <h3><a target="_blank" href="http://ebird.org/content/ebird/about/">eBird</a> data set</h3>
-        <ul class="task-list">
-          <li class="fragment">Data for 1 year for the US region</li>
-          <li class="fragment">29 GB of tab-separated values</li>
-          <li class="fragment">Nearly 1800 species</li>
-        </ul>
-        <aside class="notes" data-markdown>
-        ### eBird
-        * Collaboration between National Audubon Society and Cornell Lab of Ornithology
-        * Gather bird sighting reports from all over the world (an incredible amount of data)
-        * Had a very basic API, not good for trends
-        * Data available for download free for academic use
-        </aside>
-        </section>
+          <section>
+            <h2>Premise &mdash; Data</h2>
+            <h3><a target="_blank" href="http://ebird.org/content/ebird/about/">eBird</a> data set</h3>
+            <ul class="task-list">
+              <li class="fragment">Data for 1 year for the US region</li>
+              <li class="fragment">29 GB of tab-separated values</li>
+              <li class="fragment">Nearly 1800 species</li>
+            </ul>
+            <aside class="notes" data-markdown>
+              ### eBird
+              * Collaboration between National Audubon Society and Cornell Lab of Ornithology
+              * Gather bird sighting reports from all over the world (an incredible amount of data)
+              * Had a very basic API, not good for trends
+              * Data available for download free for academic use
+            </aside>
+          </section>
 
-        <section>
-        <h2>Premise &mdash; Back-end</h2>
-        <h3>The need for an API</h3>
-        <ul class="task-list">
-          <li class="fragment">Too much data to load at once</li>
-          <li class="fragment">d3 handles JSON requests</li>
-          <li class="fragment">Dynamic nature of the app</li>
-        </ul>
-        <aside class="notes" data-markdown>
-        * There's way too much data to *not* load on demand
-        * It uses callbacks ootb, but can be made to use promises
-        * The event-driven nature of the app meant that it couldn't be
-        modeled with a traditional request-response cycle. There needed to
-        be an API capable of rendering tailored responses to different
-        parameters.
-        </aside>
-        </section>
-        </section>
-
-
-        <section>
-        <h2>Why Clojure</h2>
-        <pre><code>
-(defn sighting-seq
-  "Return a lazy sequence of lines from filename, transformed into sighting maps"
-  [filename skip-rows nth-row]
-  (map sighting
-       (take-nth nth-row
-                 (drop (if skip-rows skip-rows 1)
-                       (line-seq (io/reader filename))))))
-            </code></pre>
+          <section>
+            <h2>Premise &mdash; Back-end</h2>
+            <h3>The need for an API</h3>
+            <ul class="task-list">
+              <li class="fragment">Too much data to load at once</li>
+              <li class="fragment">d3 handles JSON requests</li>
+              <li class="fragment">Dynamic nature of the app</li>
+            </ul>
+            <aside class="notes" data-markdown>
+              * There's way too much data to *not* load on demand
+              * It uses callbacks ootb, but can be made to use promises
+              * The event-driven nature of the app meant that it couldn't be
+              modeled with a traditional request-response cycle. There needed to
+              be an API capable of rendering tailored responses to different
+              parameters.
+            </aside>
+          </section>
         </section>
 
 
         <section>
-        <h2>Premise &mdash; Front-end</h2>
-        <h3>Why ClojureScript?</h3>
-        <ul class="task-list">
-          <li class="fragment">Easy to integrate into the existing stack</li>
-          <li class="fragment">Same language on both client and server</li>
-          <li class="fragment">Interoperability with JavaScript</li>
-        </ul>
-        <aside class="notes" data-markdown>
-        * cljsbuild plugin for Leiningen
-        * Parity with Clojure on JVM
-        </aside>
+          <h2>Why Clojure</h2>
+          <pre><code>
+  (defn sighting-seq
+    "Return a lazy sequence of lines from filename, transformed into sighting maps"
+    [filename skip-rows nth-row]
+    (map sighting
+         (take-nth nth-row
+                   (drop (if skip-rows skip-rows 1)
+                         (line-seq (io/reader filename))))))
+          </code></pre>
         </section>
 
 
         <section>
-        <h2>Why <strong>Not</strong> ClojureScript?</h2>
+          <h2>Premise &mdash; Front-end</h2>
+          <h3>Got ClojureScript?</h3>
+          <ul class="task-list">
+            <li class="fragment">Easy to integrate into the existing stack</li>
+            <li class="fragment">Same language on both client and server</li>
+            <li class="fragment">Interoperability with JavaScript</li>
+          </ul>
+          <aside class="notes" data-markdown>
+            * Parity with Clojure on JVM
+            * Let's dig into what else it has to offer
+          </aside>
+        </section>
+
+
+        <section>
+          <section>
+            <h2>Why ClojureScript?</h2>
+            <h3>Well, what <strong>is</strong> it, precious?</h3>
+            <img src="/images/gollum.gif" alt="What is it?">
+            <aside class="notes" data-markdown>
+              When you ask most people what ClojureScript is, this is the
+              reaction you seem to get. In the world of JavaScript dev, it's
+              not very clear where ClojureScript fits in. It's not a
+              framework, or syntactic sugar on top of JavaScript.
+              So what is it? It's a program that compiles Clojure into
+              JavaScript.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Why ClojureScript?</h2>
+            <ul class="task-list">
+              <li>Compiler for Clojure to JavaScript</li>
+              <li class="fragment">Emits JS optimized for the Google Closure library</li>
+              <li class="fragment">Several benefits over vanilla JS</li>
+            </ul>
+            <aside class="notes" data-markdown>
+              ### Compiler
+              * cljsbuild plugin for Leiningen
+
+              ### Closure
+              * Minification
+              * Dead code elimination
+              * Namespacing
+
+              ### Benefits
+              * Persistent data structures
+              * Object keys as opposed to only strings
+              * Macros
+              * Function argument destructuring
+              These benefits have been spoken about in detail in other talks, and
+              we have resources at the end which list some of them. It's really
+              interesting work, and has come a long way since the initial thought
+              experiment.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Why ClojureScript?</h2>
+            <pre><code>
+(def api-base-url (url "https://api.flickr.com/services/rest/"))
+
+(-> api-base-url
+  (assoc :query {:api_key "my_super_flickr_key"})
+  str)))
+            </code>
+;; https://api.flickr.com/services/rest/?api_key=my_super_flickr_key
+            </pre>
+            <aside class="notes" data-markdown>
+            Here's a simple example of what ClojureScript allows me to do. Say
+            you're building a Flickr API client.
+            * Query string can contain: api_key, nojsoncallback, license, search
+            * The `url` library allows me to take a string and create a URL instance
+            * I can associate a map of key values to this instance
+            * When I call `str` on it, it creates a query string with the map
+            * It made creating the long Flickr API strings a breeze
+            </aside>
+          </section>
+
+          <section>
+            <h2>Why ClojureScript?</h2>
+            <h6>Two (dot-separated) words:</h6>
+            <h3 class="fragment"><code>core.async</code></h3>
+            <aside class="notes" data-markdown>
+            </aside>
+          </section>
+        </section>
+
+
+        <section>
+          <h2>d3 &mdash; A Quick Intro</h2>
         </section>
       </div>
-
     </div>
 
     <script src="lib/js/head.min.js"></script>
