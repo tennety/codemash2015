@@ -49,10 +49,14 @@
 
         <section>
           <h2>Motivation</h2>
-          <h3>Birding: a quick introduction</h3>
-          <img alt="bird" src="http://placekitten.com/g/200/300" class="fragment">
-          <img alt="map" src="http://placekitten.com/g/200/300" class="fragment">
+          <h3>Birding: a brief introduction</h3>
+          <div class="fragment">
+            <img alt="map" src="images/map.gif"><br>
+            <small><a href="http://press.princeton.edu/birds/arlott/warbler/images/map.gif" target="_blank">Source: Princeton University</a></small>
+          </div>
           <aside class="notes" data-markdown>
+            The idea of Birdwave came to me partly because of an interest and a
+            hobby that I have.
             ### Birding
             * Observing and identifying birds, visually and by ear.
             * Quiet and relaxing (when you need to get away from big crowds of technologists)
@@ -61,11 +65,10 @@
               - Non-migratory birds are all you have in the off-season
             * Field guides
               - Beautiful illustrations, identifying characteristics
-            * example: *something with nice art and characteristic song*
               - Show static maps of breeding areas during the year
-            * example: *map of the above bird*
-            * So I thought it'd be nice to plot bird migration data on a map
-            * Basically this
+              * So I thought it'd be nice to plot bird migration data on a map,
+              as it changes month-to-month.
+            * Basically this...
           </aside>
         </section>
 
@@ -82,14 +85,14 @@
             <h3><a target="_blank" href="http://ebird.org/content/ebird/about/">eBird</a> data set</h3>
             <ul class="task-list">
               <li class="fragment">Data for 1 year for the US region</li>
-              <li class="fragment">29 GB of tab-separated values</li>
-              <li class="fragment">Nearly 1800 species</li>
+              <li class="fragment">11 GB of tab-separated values</li>
+              <li class="fragment">Over 1700 species</li>
             </ul>
             <aside class="notes" data-markdown>
               ### eBird
               * Collaboration between National Audubon Society and Cornell Lab of Ornithology
               * Gather bird sighting reports from all over the world (an incredible amount of data)
-              * Had a very basic API, not good for trends
+              * Have a very basic API, not good for trends
               * Data available for download free for academic use
             </aside>
           </section>
@@ -99,16 +102,17 @@
             <h3>The need for an API</h3>
             <ul class="task-list">
               <li class="fragment">Too much data to load at once</li>
-              <li class="fragment">d3 handles JSON requests</li>
               <li class="fragment">Dynamic nature of the app</li>
+              <li class="fragment">d3 handles JSON requests</li>
             </ul>
             <aside class="notes" data-markdown>
               * There's way too much data to *not* load on demand
-              * It uses callbacks ootb, but can be made to use promises
               * The event-driven nature of the app meant that it couldn't be
               modeled with a traditional request-response cycle. There needed to
               be an API capable of rendering tailored responses to different
               parameters.
+              That's when John and Chris Westra decided to use Clojure to build
+              this API.
             </aside>
           </section>
         </section>
@@ -133,14 +137,19 @@
         <section>
           <h2>Premise &mdash; Front-end</h2>
           <h3>Got ClojureScript?</h3>
+          <p>Immediate wins:</p>
           <ul class="task-list">
             <li class="fragment">Easy to integrate into the existing stack</li>
             <li class="fragment">Same language on both client and server</li>
             <li class="fragment">Interoperability with JavaScript</li>
           </ul>
           <aside class="notes" data-markdown>
-            * Parity with Clojure on JVM
-            * Let's dig into what else it has to offer
+            Now that we had a functioning API, we had to go back and take a
+            look at how to build the front-end. ClojureScript seemed like an
+            easy choice, given that we had a few immediate wins:
+
+            As we began using more of it, its value became more apparent.
+            Initially, though, it took a little getting used to.
           </aside>
         </section>
 
@@ -166,6 +175,12 @@
               <li>Compiler for Clojure to JavaScript</li>
               <li class="fragment">Emits JS optimized for the Google Closure library</li>
               <li class="fragment">Several benefits over vanilla JS</li>
+              <ul class="fragment">
+                <li>Persistent data structures</li>
+                <li>Object keys as opposed to only strings</li>
+                <li>Macros</li>
+                <li>Function argument destructuring</li>
+              </ul>
             </ul>
             <aside class="notes" data-markdown>
               ### Compiler
@@ -173,14 +188,10 @@
 
               ### Closure
               * Minification
+              * Namespacing modules
               * Dead code elimination
-              * Namespacing
 
               ### Benefits
-              * Persistent data structures
-              * Object keys as opposed to only strings
-              * Macros
-              * Function argument destructuring
               These benefits have been spoken about in detail in other talks, and
               we have resources at the end which list some of them. It's really
               interesting work, and has come a long way since the initial thought
@@ -190,17 +201,18 @@
 
           <section>
             <h2>Why ClojureScript?</h2>
+            <h3>A Small Example:</h3>
             <pre>
 ;; ClojureScript
             <code>
-(def api-base-url (url "https://api.flickr.com/services/rest/"))
+(ns bird-wave.flickr (:require [cemerick.url :refer (url)]))
 
-(-> api-base-url
-  (assoc :query {:api_key "my_super_flickr_key"})
-  str)))
-            </code>
+(def api-base-url (url "https://api.flickr.com/services/rest/"))
+;;#cemerick.url.URL{:protocol "http", :username nil, :password nil, :host "google.com", :port -1, :path "", :query nil, :anchor nil}
+
+(str (assoc api-base-url :query {:api_key "my_super_flickr_key"}))
 ;; https://api.flickr.com/services/rest/?api_key=my_super_flickr_key
-            </pre>
+            </code></pre>
             <aside class="notes" data-markdown>
             Here's a simple example of what ClojureScript allows me to do. Say
             you're building a Flickr API client.
@@ -209,6 +221,11 @@
             * I can associate a map of key values to this instance
             * When I call `str` on it, it creates a query string with the map
             * It made creating the long Flickr API strings a breeze
+
+            That was a simple example. On a much more advanced level, there
+            are libraries available in Clojureland the likes of which are
+            pretty hard to find in the JS ecosystem. Here's one example that
+            John's going to talk about:
             </aside>
           </section>
 
@@ -223,35 +240,39 @@
 
 
         <section>
-          <section>
-            <h2>d3 &mdash; A Quick Intro</h2>
-            <ul class="task_list">
-              <li class="fragment">Built around tying data with DOM (using SVG)</li>
-              <li class="fragment">Huge ecosystem solving all kinds of problems</li>
-            </ul>
-            <aside class="notes" data-markdown>
-              After that mind-trip, let's shift gears and talk about d3.
-              * Set of libraries that enable DOM manipulation based on data
-              bindings
-              * Fluent API around using functional transforms of the bound data
-              to change the state of the DOM elements
-              We'll quickly cover the parts relating to mapping.
-            </aside>
-          </section>
+          <h2>Mapping with d3</h2>
+          <h3>GeoJSON and TopoJSON</h3>
+          <img src="images/geojson.png">
+          <aside class="notes" data-markdown>
+            After that mind-trip, let's shift gears and talk about d3.
+            * Set of libraries that enable DOM manipulation based on data
+            bindings
+            * Fluent API around using functional transforms of the bound data
+            to change the state of the DOM elements
 
-          <section>
-            <h2>d3 &mdash; A Quick Intro</h2>
-            <h3>Scales, axes, behaviors</h3>
-            <aside class="notes" data-markdown>
-            </aside>
-          </section>
+            We'll quickly cover the parts relating to mapping. d3 understands
+            2 kinds of mapping data: GeoJSON and TopoJSON.
 
-          <section>
-            <h2>d3 &mdash; A Quick Intro</h2>
-            <h3>GeoJSON and TopoJSON</h3>
-            <aside class="notes" data-markdown>
-            </aside>
-          </section>
+            GeoJSON is a subset of JSON that encodes geographic data. Using
+            shapefiles generated from GIS mapping software, it represents
+            geometries as connected arcs. d3 can take these arcs and plot
+            SVG paths in the browser, complete with projections.
+
+            TopoJSON is a form of GeoJSON specific to topologies, meaning that
+            the arcs are aware of "inside" and "outside", and can eliminate
+            redundant arcs between adjacent geometries (such as state
+            borders).  TopoJSON payloads can be upto 80% smaller than GeoJSON
+            for the same amount of information. We used TopoJSON which
+            contained each county's name and state name bound to the geometry
+            to uniquely identify each county.
+
+            By normalizing the API to use the same key for each county as the
+            SVG, we were able to associate the county-wise sighting data with
+            the map, and as it changed month-to-month, d3 would transition the
+            elements' colors accordingly.
+
+            So how did we get d3 working with ClojureScript?
+          </aside>
         </section>
 
 
@@ -309,6 +330,32 @@ var months = d3.time.scale
             </code></pre>
           </section>
         </section>
+
+
+        <section>
+          <section data-markdown>
+            ## Resources
+            #### Birding
+            * [eBird.org](http://ebird.org)
+            * [Cornell Lab of Ornithology](http://birds.cornell.edu)
+          </section>
+
+          <section data-markdown>
+            ## Resources
+            #### Clojure
+            * [clojure.org](http://clojure.org)
+          </section>
+
+          <section data-markdown>
+            ## Resources
+            #### ClojureScript
+          </section>
+
+          <section data-markdown>
+            ## Resources
+            #### d3
+          </section>
+        </section>
       </div>
     </div>
 
@@ -340,6 +387,7 @@ var months = d3.time.scale
         { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
         { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
         { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        // , { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
         ]
         });
 
