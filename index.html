@@ -328,7 +328,30 @@ var months = d3.time.scale
    (.domain (array (js/Date. 2012 10 15) (js/Date. 2013 10 15)))
    (.range (array 0 900))))
             </code></pre>
+            <aside class="notes" data-markdown>
+              _Chandu:_
+              The fact that d3 could do DOM manipulation and event-handling let
+              us build a prototype UI rather quickly by using d3 for not just
+              the mapping but also for other interactive parts of the app, such
+              as the bird and month selectors. But I took it too far.  That's
+              when John stepped in with Om.
+            </aside>
           </section>
+        </section>
+
+
+        <section>
+          <h2>Richer UI with React and Om</h2>
+          <img src="images/wonka.gif">
+          <aside class="notes" data-markdown>
+            _John:_
+            What Chandu did with D3 and the interactive maps is amazing and D3
+            is a super powerful library for creating visualizations but when
+            it came time to create the controls for our application we were
+            frustrated by the same thing we're always frustrated by namely the
+            scattering around of state and the growing complexity of dealing
+            with events and coordination of state.
+          </aside>
         </section>
 
 
