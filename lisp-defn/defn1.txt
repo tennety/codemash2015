@@ -1,0 +1,3 @@
+function greet(who, event) {
+  return "Greetings " + who + "! Welcome to " + event "!";
+}

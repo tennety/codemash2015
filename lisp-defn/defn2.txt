@@ -1,0 +1,2 @@
+(defn greet [who event]
+  (str "Greetings " who "! Welcome to " event "!"))
