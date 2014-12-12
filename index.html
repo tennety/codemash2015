@@ -236,6 +236,56 @@
             <h6>Two (dot-separated) words:</h6>
             <h3 class="fragment"><code>core.async</code></h3>
             <aside class="notes" data-markdown>
+              * powerful channel-based asynchronous programming
+              * similar to goroutines from golang
+              * turns async code into sync-looking code
+            </aside>
+          </section>
+
+          <section>
+            <h2>core.async example</h2>
+            <pre>
+;; ClojureScript
+              <code>
+(go
+  (alt!
+    (await-taxonomy model)
+    (log "Located " (count model) " records")
+
+    (timeout 60000)
+    (log "Timed out waiting for data")))
+              </code>
+            </pre>
+
+            <aside class="notes" data-markdown>
+              * alt! is like switch for channels
+              * takes the first message from any channel
+              * timeout is builtin to core async
+              * how do we create await-taxonomy
+            </aside>
+          </section>
+
+          <section>
+            <h2>core.async</h2>
+            <pre>
+;; ClojureScript
+              <code>
+(defn await-taxonomy
+  "Return a channel which will receive the value of
+   :taxonomy after it has a non-empty value"
+  [model]
+  (go-loop [{:keys [taxonomy]} (deref model)]
+    (if (not-empty taxonomy)
+      taxonomy
+      (do (<! (timeout 10))
+          (recur (deref model))))))
+              </code>
+            </pre>
+            <aside class="notes" data-markdown>
+              * returns a channel
+              * destructures model to retrieve taxonomy
+              * loops until non-nil taxonomy
+              * no callbacks
             </aside>
           </section>
         </section>
