@@ -309,7 +309,7 @@
   (go-loop [{:keys [taxonomy]} (deref model)]
     (if (not-empty taxonomy)
       taxonomy
-      (do (<! (timeout 10))
+      (do (&lt;! (timeout 10))
           (recur (deref model))))))
               </code>
             </pre>
@@ -453,7 +453,7 @@ var months = d3.time.scale
 
           <section>
             <h2>A Component</h2>
-            <video autoplay>
+            <video height="500" autoplay>
               <source src="images/birdwave-filter-list.mp4" type="video/mp4">
             </video>
           </section>
