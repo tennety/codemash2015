@@ -459,6 +459,41 @@ var months = d3.time.scale
               <li>Keeps real DOM in sync with your ideal DOM</li>
             </ul>
           </section>
+
+          <section>
+            <h2>Om</h2>
+            <ul>
+              <li>Builds upon react</li>
+              <li>Leverages immutability</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Om Example</h2>
+            <pre>
+;; ClojureScript
+              <code>
+(defn selection-name [name owner]
+  (om/component
+    (dom/h2 #js {:className "selection-name"} name)))
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Handling Events In Om</h2>
+            <pre>
+;; ClojureScript
+              <code>
+
+(defn date-minus [model owner]
+  (om/component
+    (dom/span #js {:id "date-minus"
+                   :onClick #(update-month! model owner dec)}
+              "-")))
+              </code>
+            </pre>
+          </section>
         </section>
 
 
