@@ -343,17 +343,122 @@ var months = d3.time.scale
 
 
         <section>
-          <h2>Richer UI with React and Om</h2>
-          <img src="images/wonka.gif">
-          <aside class="notes" data-markdown>
-            _John:_
-            What Chandu did with D3 and the interactive maps is amazing and D3
-            is a super powerful library for creating visualizations but when
-            it came time to create the controls for our application we were
-            frustrated by the same thing we're always frustrated by namely the
-            scattering around of state and the growing complexity of dealing
-            with events and coordination of state.
-          </aside>
+          <section>
+            <h2>Richer UI with React and Om</h2>
+            <aside class="notes" data-markdown>
+              _John:_
+              What Chandu did with D3 and the interactive maps is amazing and D3
+              is a super powerful library for creating visualizations but when
+              it came time to create the controls for our application we were
+              frustrated by the same thing we're always frustrated by namely the
+              scattering around of state and the growing complexity of dealing
+              with events and coordination of state.
+
+              We wondered what a functional approach to UIs would look like.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Imagination Land</h2>
+            <img src="images/wonka.gif">
+            <aside class="notes" data-markdown>
+              _John:_
+              * Pretend you don't know anything about the DOM or browser enfironment
+              * Unlearn the last 15 years of experience you have manipulating the DOM
+              * Picture an ideal world where the DOM is just a function of your program state
+            </aside>
+          </section>
+
+          <section>
+            <h2>A Component</h2>
+            <video autoplay>
+              <source src="images/birdwave-filter-list.mp4" type="video/mp4">
+            </video>
+          </section>
+
+          <section>
+            <h2>Initial Render</h2>
+            <h3>Remember: Imagination Land</h3>
+            <pre>
+;; ClojureScript
+              <code>
+(ul {:className "species-list"}
+  (li {:className "species"} (a {:href "#/taxon/1"} "Abert's Towhee"))
+  (li {:className "species"} (a {:href "#/taxon/2"} "Acadian Flycatcher"))
+  (li {:className "species"} (a {:href "#/taxon/3"} "Acorn Woodpecker"))
+  ... )
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Building the list</h2>
+            <pre>
+;; ClojureScript
+              <code>
+(defn species-li [species]
+  (li {:className "species"}
+      (a {:href (path species)} (:common-name species))))
+
+(map species-li all-species)
+              </code>
+            </pre>
+            <aside class="notes">
+              In imagination land the most straightforward way to render this list is to
+              iterate over our data, building up our list as we go. Then when the list is built
+              we replace old dom with our new representation. And our job is done.
+
+              Note that this code doesn't mutate the DOM directly. It returns a datastructure
+              that we can then ask the browser to paint for us. This makes testing our
+              view code easy.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Interactivity</h2>
+            <pre>
+;; ClojureScript
+              <code>
+(map species-li
+     (filter (match-string "black-thr") species))
+              </code>
+            </pre>
+            <aside class="notes">
+              User types in some filter text. On each keystroke we match against the list.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Putting it together</h2>
+            <pre>
+;; ClojureScript
+              <code>
+(defn filter-list-items [filter-text species]
+  (ul {:className "species-list"}
+      (map species-li
+           (filter (match-string filter-text) species))))
+
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>We don't live in imagination land</h2>
+            <ul>
+              <li>Replacing entire swaths of dom is slow</li>
+              <li>No data structures</li>
+              <li>Nobody does this in real life</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>React: A better DOM</h2>
+            <ul>
+              <li>Render the dom you want</li>
+              <li>React takes care of the details</li>
+              <li>Keeps real DOM in sync with your ideal DOM</li>
+            </ul>
+          </section>
         </section>
 
 

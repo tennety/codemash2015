@@ -13,6 +13,7 @@
 * TODO Present to Neo
   SCHEDULED: <2014-12-12 Fri>
 
+* example species should include Black-throated Blue Warbler
 * Intro ideas
 ** We're going to throw a lot of potentially unfamiliar concepts at you today
    This for us is part of the appeal of clojure. There is a lot of innovation
@@ -34,7 +35,10 @@
 ** Dont need to use all of these to understand clojure
 ** Learn these as a side-effect of hanging around the clojure community
 * Why Clojure?
+** not a client project
+** <3
 ** importing data file
+*** lazy sequence of data
 ** datomic
 * Brief intro to lisps
 ** LISt Processing
@@ -87,7 +91,7 @@
     )
 *** CODE how we can dynamically build the list
     (map species-li
-         (filter (match-string "star") species))
+         (filter (match-string "black-thr") species))
 **** highlight the filter sexp
 ** SLIDE Sadly we don't live in imagination land
 *** Replacing entire swaths of dom is slow
