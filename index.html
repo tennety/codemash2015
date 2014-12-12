@@ -121,7 +121,9 @@
 
 
         <section>
-          <h2>Why Clojure</h2>
+          <section>
+            <h2>Why Clojure</h2>
+            <h3>Can I import a gigantic data file? ✓</h3>
             <pre>
 ;; Clojure
             <code>
@@ -132,7 +134,37 @@
     (take-nth nth-row
       (drop (if skip-rows skip-rows 1)
         (line-seq (io/reader filename))))))
-          </code></pre>
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Why Clojure</h2>
+            <h3>Is there a flexible database API? ✓</h3>
+            <img src="images/datomic.png">
+          </section>
+
+          <section>
+            <h2>Why Clojure</h2>
+            <h3>Is there a flexible database API? ✓</h3>
+            <p><strong>Datomic</strong></p>
+            <ul>
+              <li>Transactions</li>
+              <li>History</li>
+              <li>Query language <em>is</em> Clojure</li>
+              <li>Results are Clojure data structures</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Why Clojure</h3>
+            <h3>Is there a robust web framework? ✓</h3>
+            <p><strong>Pedestal Service</strong></p>
+            <ul>
+              <li>Powerful middleware system</li>
+              <li>Routing</li>
+              <li>HTML Templating</li>
+            </ul>
+          </section>
         </section>
 
 
