@@ -1,4 +1,4 @@
-# Wasn't sure of the "why" (needs a strong story arc) and how Clojure helped
+# The story arc
 - need to give better examples about why you picked clojure over other languages.  answer:  "why clojure?"  The decision factor wasn't really presented.
 - how do lisps relate well to birdwave in particular?  Your examples should continually feed into how it helped birdwave development
   - "can i import a giganctic data file" was much better at doing this
