@@ -262,7 +262,23 @@
 
           <section>
             <h2>Why ClojureScript?</h2>
-            <h3>A Small Example:</h3>
+            <h3>A Small Example</h3>
+            <img height="240" src="images/flickr-img.png">
+            <img height="240" src="images/flickr-hover1.png">
+            <img height="240" src="images/flickr-hover2.png">
+            <aside class="notes" data-markdown>
+              One of the feature requests for birdwave was to show a photo of
+              the selected bird where possible. I needed a service that could
+              take the bird name, search Flickr for images with a CC license
+              and return the first one. What I didn't need was a giant Flickr
+              library, just something simple that could build (as it turned
+              out) 2 API requests.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Why ClojureScript?</h2>
+            <h3>A Small Example</h3>
             <pre>
 ;; ClojureScript
             <code>
@@ -275,8 +291,7 @@
 ;; https://api.flickr.com/services/rest/?api_key=my_super_flickr_key
             </code></pre>
             <aside class="notes" data-markdown>
-            Here's a simple example of what ClojureScript allows me to do. Say
-            you're building a Flickr API client.
+            Here's a simple example of what ClojureScript allows me to do:
             * Query string can contain: api_key, nojsoncallback, license, search
             * The `url` library allows me to take a string and create a URL instance
             * I can associate a map of key values to this instance
