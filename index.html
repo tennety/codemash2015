@@ -12,7 +12,6 @@
     <title>A Bird's Eye View of ClojureScript</title>
     <link rel="stylesheet" href="css/reveal.min.css">
     <link rel="stylesheet" href="css/theme/neo.css" id="theme">
-    <link rel="stylesheet" href="css/main.css" id="theme">
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="lib/css/hemisu-light.css">
     <!-- If the query includes 'print-pdf', include the PDF print sheet -->
@@ -35,9 +34,18 @@
       <div class="slides">
         <section>
           <h1>A Bird's Eye View of ClojureScript</h1>
-          <h3>Or: you don't <em>have</em> to write JavaScript!</h3>
+          <h4>
+            Chandu Tennety
+          </h4>
           <p>
-            <small>Chandu Tennety &middot; John Andrews</small>
+          {:github "tennety" :twitter "tennety"}
+          </p>
+          <br>
+          <h4>
+            John Andrews
+          </h4>
+          <p>
+            {:github "xandrews" :twitter "xandrews"}
           </p>
           <aside class="notes">
             Thank you for coming to this talk, we value your time and are excited that you chose to share it with us.
@@ -49,36 +57,86 @@
 
 
         <section>
-          <h2>Motivation</h2>
-          <h3>Birding: a brief introduction</h3>
-          <div class="fragment">
-            <img alt="map" src="images/map.gif"><br>
-            <small><a href="http://press.princeton.edu/birds/arlott/warbler/images/map.gif" target="_blank">Source: Princeton University</a></small>
-          </div>
-          <aside class="notes" data-markdown>
-            The idea of Birdwave came to me partly because of an interest and a
-            hobby that I have.
-            ### Birding
-            * Observing and identifying birds, visually and by ear.
-            * Quiet and relaxing (when you need to get away from big crowds of technologists)
-            * Closely tied with migratory patterns:
-              - Migration seasons are peaks
-              - Non-migratory birds are all you have in the off-season
-            * Field guides
-              - Beautiful illustrations, identifying characteristics
-              - Show static maps of breeding areas during the year
-              * So I thought it'd be nice to plot bird migration data on a map,
-              as it changes month-to-month.
-            * Basically this...
-          </aside>
+          <h2>Overview</h2>
+          <ul>
+            <li class="fragment highlight-current-blue">Motivation</li>
+            <li>Premise -- why Clojure?</li>
+            <li>Premise -- why ClojureScript?</li>
+            <li>d3 -- mapping and JS interoperability</li>
+            <li>React and Om</li>
+            <li>Lessons and Insights</li>
+          </ul>
         </section>
 
 
         <section>
-          <h2>Demo &mdash; Birdwave</h2>
-          <video autoplay>
+          <section>
+            <h2>Birdwave: Motivation</h2>
+            <div class="fragment">
+              <img alt="map" src="images/map.gif"><br>
+              <small><a href="http://press.princeton.edu/birds/arlott/warbler/images/map.gif" target="_blank">Source: Princeton University</a></small>
+            </div>
+            <aside class="notes" data-markdown>
+              Before we jump in, I'd like to quickly introduce the project we
+              worked on. We are going to talk about it today as we show you how
+              and why we used Clojure and ClojureScript and what we've learned in
+              the process. It's called Birdwave, and it's primarily a data
+              visualization. The idea of Birdwave came to me partly because of an interest and a
+              hobby that I have.
+
+              ### Birding
+              * Observing and identifying birds, visually and by ear.
+              * Quiet and relaxing (when you need to get away from big crowds of technologists)
+              * Closely tied with migratory patterns:
+                - Migration seasons are peaks
+                - Non-migratory birds are all you have in the off-season
+              * Field guides
+                - Beautiful illustrations, identifying characteristics
+                - Show static maps of breeding areas during the year
+            </aside>
+          </section>
+          <section>
+            <h2>Birdwave: Motivation</h2>
+            <div class="fragment">
+              <img width="100%" alt="map" src="images/map-specific.png"><br>
+              <p>
+                Yellow Warbler
+                <object type="application/x-shockwave-flash" data="http://imagess3.enature.com/listen.swf" width="63" height="15" id="bd0363" style="visibility: visible;"><param name="flashvars" value="audio=bd0363"></object>
+              </p>
+              <p>
+                Chestnut-sided Wabler
+                <object type="application/x-shockwave-flash" data="http://imagess3.enature.com/listen.swf" width="63" height="15" id="bd0362" style="visibility: visible;"><param name="flashvars" value="audio=bd0362"></object>
+              </p>
+            </div>
+            <aside class="notes" data-markdown>
+              * Whimsical descriptions of songs:
+                - Yellow warbler -- "sweet sweet sweet I'm so sweet"
+                - Chestnut-sided warbler -- "pleased pleased pleased to meecha"
+              * So I thought it'd be nice to plot bird migration data on a map, as it changes month-to-month.
+              * Basically this...
+            </aside>
+          </section>
+        </section>
+
+
+        <section>
+          <h2>Birdwave: Demo</h2>
+          <video controls>
             <source src="images/birdwave-demo.mp4" type="video/mp4">
           </video>
+        </section>
+
+
+        <section>
+          <h2>Overview</h2>
+          <ul>
+            <li>Motivation</li>
+            <li class="fragment highlight-current-blue">Premise -- why Clojure?</li>
+            <li>Premise -- why ClojureScript?</li>
+            <li>d3 -- mapping and JS interoperability</li>
+            <li>React and Om</li>
+            <li>Lessons and Insights</li>
+          </ul>
         </section>
 
 
@@ -137,7 +195,7 @@
           </section>
 
           <section>
-            <h2>Aside: Clojure syntax</h2>
+            <h2>Aside: Clojure Syntax</h2>
             <h3></h3>
             <video height="500" controls class="fragment">
               <source src="images/clojure-defn.mp4" type="video/mp4">
@@ -152,9 +210,9 @@
           <section>
             <h2>Why Clojure</h2>
             <h3>Can I import a gigantic data file? ✓</h3>
-            <pre>
+            <pre><code>
 ;; Clojure
-            <code>
+
 (defn sighting-seq
   "Return a lazy sequence of lines from filename, transformed into sighting maps"
   [filename skip-rows nth-row]
@@ -197,6 +255,19 @@
 
 
         <section>
+          <h2>Overview</h2>
+          <ul>
+            <li>Motivation</li>
+            <li>Premise -- why Clojure?</li>
+            <li class="fragment highlight-current-blue">Premise -- why ClojureScript?</li>
+            <li>d3 -- mapping and JS interoperability</li>
+            <li>React and Om</li>
+            <li>Lessons and Insights</li>
+          </ul>
+        </section>
+
+
+        <section>
           <h2>Premise &mdash; Front-end</h2>
           <h3>Got ClojureScript?</h3>
           <p>Immediate wins:</p>
@@ -220,7 +291,7 @@
           <section>
             <h2>Why ClojureScript?</h2>
             <h3>Well, what <strong>is</strong> it, precious?</h3>
-            <img src="/images/gollum.gif" alt="What is it?">
+            <img width="80%" src="/images/gollum.gif" alt="What is it?">
             <aside class="notes" data-markdown>
               When you ask most people what ClojureScript is, this is the
               reaction you seem to get. In the world of JavaScript dev, it's
@@ -280,9 +351,8 @@
           <section>
             <h2>Why ClojureScript?</h2>
             <h3>A Small Example</h3>
-            <pre>
+            <pre><code>
 ;; ClojureScript
-            <code>
 (ns bird-wave.flickr (:require [cemerick.url :refer (url)]))
 
 (def api-base-url (url "https://api.flickr.com/services/rest/"))
@@ -318,10 +388,10 @@
           </section>
 
           <section>
-            <h2>core.async example</h2>
-            <pre>
+            <h2>Why Clojurescript?</h2>
+            <h3><code>core.async</code> example</h3>
+            <pre><code>
 ;; ClojureScript
-              <code>
 (go
   (alt!
     (await-taxonomy model)
@@ -329,8 +399,7 @@
 
     (timeout 60000)
     (log "Timed out waiting for data")))
-              </code>
-            </pre>
+              </code></pre>
 
             <aside class="notes" data-markdown>
               * alt! is like switch for channels
@@ -341,10 +410,10 @@
           </section>
 
           <section>
-            <h2>core.async</h2>
-            <pre>
+            <h2>Why ClojureScript?</h2>
+            <h3><code>core.async</code> example</h3>
+            <pre><code>
 ;; ClojureScript
-              <code>
 (defn await-taxonomy
   "Return a channel which will receive the value of
    :taxonomy after it has a non-empty value"
@@ -354,8 +423,7 @@
       taxonomy
       (do (&lt;! (timeout 10))
           (recur (deref model))))))
-              </code>
-            </pre>
+              </code></pre>
             <aside class="notes" data-markdown>
               * returns a channel
               * destructures model to retrieve taxonomy
@@ -367,8 +435,20 @@
 
 
         <section>
-          <h2>Mapping with d3</h2>
-          <h3>GeoJSON and TopoJSON</h3>
+          <h2>Overview</h2>
+          <ul>
+            <li>Motivation</li>
+            <li>Premise -- why Clojure?</li>
+            <li>Premise -- why ClojureScript?</li>
+            <li class="fragment highlight-current-blue">d3 -- mapping and JS interoperability</li>
+            <li>React and Om</li>
+            <li>Lessons and Insights</li>
+          </ul>
+        </section>
+
+
+        <section>
+          <h2>Mapping with d3 and TopoJSON</h2>
           <img src="images/geojson.png">
           <aside class="notes" data-markdown>
             After that mind-trip, let's shift gears and talk about d3.
@@ -406,7 +486,7 @@
         <section>
           <section>
             <h2>d3 and JavaScript Interop</h2>
-            <h3>Methods and Props</h3>
+            <h3>Methods</h3>
             <pre>
 // JavaScript
             <code>
@@ -423,7 +503,7 @@ var activeState = function() {
 
           <section>
             <h2>d3 and JavaScript Interop</h2>
-            <h3>Methods and Props</h3>
+            <h3>Properties</h3>
             <pre>
 // JavaScript
             <code>
@@ -435,6 +515,8 @@ var target = function() {
 ;; ClojureScript
             <code>
 (defn target [] (.-target (.-event js/d3)))
+;; OR
+(defn target [] (.. js/d3 -event -target)
             </code></pre>
           </section>
 
@@ -468,8 +550,23 @@ var months = d3.time.scale
 
 
         <section>
+          <h2>Overview</h2>
+          <ul>
+            <li>Motivation</li>
+            <li>Premise -- why Clojure?</li>
+            <li>Premise -- why ClojureScript?</li>
+            <li>d3 -- mapping and JS interoperability</li>
+            <li class="fragment highlight-current-blue">React and Om</li>
+            <li>Lessons and Insights</li>
+          </ul>
+        </section>
+
+
+        <section>
           <section>
             <h2>Richer UI with React and Om</h2>
+            <h3>Imagination Land</h3>
+            <img width="80%" src="images/wonka.gif">
             <aside class="notes" data-markdown>
               _John:_
               What Chandu did with D3 and the interactive maps is amazing and D3
@@ -480,14 +577,7 @@ var months = d3.time.scale
               with events and coordination of state.
 
               We wondered what a functional approach to UIs would look like.
-            </aside>
-          </section>
 
-          <section>
-            <h2>Imagination Land</h2>
-            <img src="images/wonka.gif">
-            <aside class="notes" data-markdown>
-              _John:_
               * Pretend you don't know anything about the DOM or browser enfironment
               * Unlearn the last 15 years of experience you have manipulating the DOM
               * Picture an ideal world where the DOM is just a function of your program state
@@ -496,7 +586,7 @@ var months = d3.time.scale
 
           <section>
             <h2>A Component</h2>
-            <video height="500" autoplay>
+            <video height="500" controls>
               <source src="images/birdwave-filter-list.mp4" type="video/mp4">
             </video>
           </section>
@@ -517,7 +607,7 @@ var months = d3.time.scale
           </section>
 
           <section>
-            <h2>Building the list</h2>
+            <h2>Building the List</h2>
             <pre>
 ;; ClojureScript
               <code>
@@ -554,7 +644,7 @@ var months = d3.time.scale
           </section>
 
           <section>
-            <h2>Putting it together</h2>
+            <h2>Putting It Together</h2>
             <pre>
 ;; ClojureScript
               <code>
@@ -568,7 +658,7 @@ var months = d3.time.scale
           </section>
 
           <section>
-            <h2>We don't live in imagination land</h2>
+            <h2>We Don't Live in Imagination Land</h2>
             <ul>
               <li>Replacing entire swaths of dom is slow</li>
               <li>No data structures</li>
@@ -577,7 +667,7 @@ var months = d3.time.scale
           </section>
 
           <section>
-            <h2>React: A better DOM</h2>
+            <h2>React: A Better DOM</h2>
             <ul>
               <li>Render the dom you want</li>
               <li>React takes care of the details</li>
@@ -619,6 +709,19 @@ var months = d3.time.scale
               </code>
             </pre>
           </section>
+        </section>
+
+
+        <section>
+          <h2>Overview</h2>
+          <ul>
+            <li>Motivation</li>
+            <li>Premise -- why Clojure?</li>
+            <li>Premise -- why ClojureScript?</li>
+            <li>d3 -- mapping and JS interoperability</li>
+            <li>React and Om</li>
+            <li class="fragment highlight-current-blue">Lessons and Insights</li>
+          </ul>
         </section>
 
 
@@ -685,11 +788,22 @@ var months = d3.time.scale
           <section data-markdown>
             ## Resources
             #### ClojureScript
+            * [The ClojureScript Compilation Pipeline](http://blog.fogus.me/2012/04/25/the-clojurescript-compilation-pipeline/)
           </section>
 
           <section data-markdown>
             ## Resources
             #### d3
+          </section>
+
+          <section data-markdown>
+            ## Resources
+            #### Birdwave
+            * [Announcing Birdwave](http://www.neo.com/2014/09/22/announcing-birdwave)
+            * [Choropleths and d3js](http://www.neo.com/2014/04/21/choropleths-and-d3js)
+            * [Using the Flickr API with ClojureScript](http://www.neo.com/2014/07/18/using-the-flickr-api-with-clojurescript)
+            * [Adding an Om Component -- a Walkthrough](http://www.neo.com/2014/11/17/adding-a-clojurescriptom-component-a-walkthrough)
+            * [Responsive JavaScript with EnquireJS](http://www.neo.com/2014/10/03/responsive-javascript-with-enquirejs)
           </section>
         </section>
       </div>
@@ -708,8 +822,8 @@ var months = d3.time.scale
         history: true,
         center: true,
 
-        theme: "solarized", // available themes are in /css/theme
-        transition: "page", // default/cube/page/concave/zoom/linear/fade/none
+        theme: "neo", // available themes are in /css/theme
+        transition: "linear", // default/cube/page/concave/zoom/linear/fade/none
 
         // Parallax scrolling
         // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',

@@ -10,11 +10,11 @@
 - Make sure you think about what you want the audience to come away from this talk thinking.  Is it “I want to use clojurescript”? Is it “I have been given a taste of a complex app that uses 4 technologies that I need to go learn”? I think your last slide suggests it’s the former. If so, does the Om stuff really add to that? Pick a point of view and make sure everything in your talk supports that view and eliminate/reduce things that detract from that.
 
 # Section transitions
-- Agenda, recap between sections
-- high five each other every time you transition between your parts of the presentation
-   - actually, I think your pacing of switching back and forth felt right to me.  It was just enough to break up any monotony
-+ nice examples on the bird field guide (what about playing actual bird sounds during this part? ... that would be cool)
-+ nice change of pace with "imagination land".  Breaks up the show and tell nicely.
+✓ Agenda, recap between sections
+✓ high five each other every time you transition between your parts of the presentation
+   ✓ actually, I think your pacing of switching back and forth felt right to me.  It was just enough to break up any monotony
+✓ nice examples on the bird field guide (what about playing actual bird sounds during this part? ... that would be cool)
+✓ nice change of pace with "imagination land".  Breaks up the show and tell nicely.
    + uses a particular component from bird wave ... good choice to stay on topic
 - Don’t put slides up until you are ready for them.  “Why Clojure, It’s a Lisp” was up for a long time before it was referred to. Consider getting a better transition slide for the handoff.
 
@@ -55,16 +55,16 @@
 - The part where you were describing how OM improved on React was a bit confusing to me. You were explaining a mental model.
 
 # Go bigger!
-- Fullscreen video
-+ use full screen browser mode
-- birdwave demo video is too small to get full impact ... this is your big showing!  If they don't understand or aren't impressed that might not care about the implementation
-- actually, having all the slides be larger would be nice
-- The “birding: a brief introduction” thing is too small to read.  Memorize the quote or blow up the part that needs to be read (pop out of page)
-- Can you make Gollum bigger?
+✓ Fullscreen video
+✓ use full screen browser mode
+✓ birdwave demo video is too small to get full impact ... this is your big showing!  If they don't understand or aren't impressed that might not care about the implementation
+✓ actually, having all the slides be larger would be nice
+✓ The “birding: a brief introduction” thing is too small to read.  Memorize the quote or blow up the part that needs to be read (pop out of page)
+✓ Can you make Gollum bigger?
 
-# Links to birdwave, blog posts
+✓ Links to birdwave, blog posts
 
 # Investment Friday plug
 
-# Get rid if tagline
-- avoid using buzz words like "rich tools"
+✓ Get rid of tagline
+✓ avoid using buzz words like "rich tools"
