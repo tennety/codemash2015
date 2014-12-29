@@ -21,6 +21,15 @@
   .reveal h6 code {
     text-transform: initial; }
 
+.highlighted-red {
+  color: #ff2c2d; }
+
+.highlighted-green {
+  color: #17ff2e; }
+
+.highlighted-blue {
+  color: #1b91ff; }
+
 /*********************************************
  * GLOBAL STYLES
  *********************************************/

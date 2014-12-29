@@ -2,11 +2,11 @@
 - need to give better examples about why you picked clojure over other languages.  answer:  "why clojure?"  The decision factor wasn't really presented.
 - how do lisps relate well to birdwave in particular?  Your examples should continually feed into how it helped birdwave development
   - "can i import a giganctic data file" was much better at doing this
-- have a slide that shows the "immediate wins" of clojure, just like you did with clojurescript
+✓ have a slide that shows the "immediate wins" of clojure, just like you did with clojurescript
 - benefits of datomic ... talk about how each feature was used and important for birdwave
 + good job not going too deep into the intricacies of clojure or clojurescript
 = be thinking about the "why?" of your presentation.  Is the goal to "explain how birdwave was created", to advocate the benefits of clojure or clojurescript, to get people excited about new languages, to compare javascript to clojurescript, to have people consider different ways of tackling difficult computing problems, or something else.  Make sure you stick to this goal and make it the common thread throughout your presentation.  I wasn't entirely sure what this thread was.
-- I like how you included stuff about “why clojure” but look for ways to demonstrate your love/enthusiasm for it better. Audiences will be excited if you are excited.
+✓ I like how you included stuff about “why clojure” but look for ways to demonstrate your love/enthusiasm for it better. Audiences will be excited if you are excited.
 - Make sure you think about what you want the audience to come away from this talk thinking.  Is it “I want to use clojurescript”? Is it “I have been given a taste of a complex app that uses 4 technologies that I need to go learn”? I think your last slide suggests it’s the former. If so, does the Om stuff really add to that? Pick a point of view and make sure everything in your talk supports that view and eliminate/reduce things that detract from that.
 
 # Section transitions
@@ -16,9 +16,10 @@
 ✓ nice examples on the bird field guide (what about playing actual bird sounds during this part? ... that would be cool)
 ✓ nice change of pace with "imagination land".  Breaks up the show and tell nicely.
    + uses a particular component from bird wave ... good choice to stay on topic
-- Don’t put slides up until you are ready for them.  “Why Clojure, It’s a Lisp” was up for a long time before it was referred to. Consider getting a better transition slide for the handoff.
+✓ Don’t put slides up until you are ready for them.  “Why Clojure, It’s a Lisp” was up for a long time before it was referred to. Consider getting a better transition slide for the handoff.
 
 # App architecture
+✓ Architecture diagram
 - perhaps discuss how data moves through birdwave ... what is requested, what is the payload, performance implications
    - perhaps give json payload example, rather than just verbally describing what is in the payload
 ? Are there any limitations you found with the technical decisions that were made?
@@ -38,7 +39,7 @@
 # Code examples
 - Illustrate where the code examples were used
 - add more sample code from birdwave to illustrate your points
-- when you talk about the flickr clojurescript, remind the audience why you needed flickr for birdwave...the problem you were attempting to solve
+✓ when you talk about the flickr clojurescript, remind the audience why you needed flickr for birdwave...the problem you were attempting to solve
 + good job showing why using clojurescript for flickr was a huge win for you
 - definitely show how birdwave looks/behaves on mobile
 + perhaps having a laser pointer to point out things on the screen?

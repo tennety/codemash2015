@@ -60,9 +60,10 @@
           <h2>Overview</h2>
           <ul>
             <li class="fragment highlight-current-blue">Motivation</li>
-            <li>Premise -- why Clojure?</li>
-            <li>Premise -- why ClojureScript?</li>
-            <li>d3 -- mapping and JS interoperability</li>
+            <li>Architecture</li>
+            <li>Why Clojure?</li>
+            <li>Why ClojureScript?</li>
+            <li>d3 &mdash; mapping and JS interoperability</li>
             <li>React and Om</li>
             <li>Lessons and Insights</li>
           </ul>
@@ -71,7 +72,7 @@
 
         <section>
           <section>
-            <h2>Birdwave: Motivation</h2>
+            <h2>Motivation</h2>
             <div class="fragment">
               <img alt="map" src="images/map.gif"><br>
               <small><a href="http://press.princeton.edu/birds/arlott/warbler/images/map.gif" target="_blank">Source: Princeton University</a></small>
@@ -81,8 +82,8 @@
               worked on. We are going to talk about it today as we show you how
               and why we used Clojure and ClojureScript and what we've learned in
               the process. It's called Birdwave, and it's primarily a data
-              visualization. The idea of Birdwave came to me partly because of an interest and a
-              hobby that I have.
+              visualization. The idea of Birdwave came to me partly because of
+              an interest and a hobby that I have.
 
               ### Birding
               * Observing and identifying birds, visually and by ear.
@@ -96,8 +97,8 @@
             </aside>
           </section>
           <section>
-            <h2>Birdwave: Motivation</h2>
-            <div class="fragment">
+            <h2>Motivation</h2>
+            <div>
               <img width="100%" alt="map" src="images/map-specific.png"><br>
               <p>
                 Yellow Warbler
@@ -120,7 +121,7 @@
 
 
         <section>
-          <h2>Birdwave: Demo</h2>
+          <h2>Demo</h2>
           <video controls>
             <source src="images/birdwave-demo.mp4" type="video/mp4">
           </video>
@@ -131,9 +132,41 @@
           <h2>Overview</h2>
           <ul>
             <li>Motivation</li>
-            <li class="fragment highlight-current-blue">Premise -- why Clojure?</li>
-            <li>Premise -- why ClojureScript?</li>
-            <li>d3 -- mapping and JS interoperability</li>
+            <li class="fragment highlight-current-blue">Architecture</li>
+            <li>Why Clojure?</li>
+            <li>Why ClojureScript?</li>
+            <li>d3 &mdash; mapping and JS interoperability</li>
+            <li>React and Om</li>
+            <li>Lessons and Insights</li>
+          </ul>
+        </section>
+
+
+        <section>
+          <h2>Architecture</h2>
+          <img src="images/bw-arch.png">
+          <aside class="notes" data-markdown>
+            The architecture we ended up with looks something like this.
+
+            * The backend consists of a database backed by Datomic and the
+            Pedestal web-service framework. It serves up the static and compiled
+            assets and also provides an API for requests from the front-end.
+
+            * The front-end uses 3rd party libraries such as d3, React and
+            enquire, and the compiled ClojureScript to provide a responsive
+            client-side application.
+          </aside>
+        </section>
+
+
+        <section>
+          <h2>Overview</h2>
+          <ul>
+            <li>Motivation</li>
+            <li>Architecture</li>
+            <li class="fragment highlight-current-blue">Why Clojure?</li>
+            <li>Why ClojureScript?</li>
+            <li>d3 &mdash; mapping and JS interoperability</li>
             <li>React and Om</li>
             <li>Lessons and Insights</li>
           </ul>
@@ -142,8 +175,61 @@
 
         <section>
           <section>
-            <h2>Premise &mdash; Data</h2>
-            <h3><a target="_blank" href="http://ebird.org/content/ebird/about/">eBird</a> data set</h3>
+            <h2>Why Clojure</h2>
+            <h3>Big questions</h3>
+            <ul>
+              <li>It's a Lisp!</li>
+              <li>Can it import a gigantic data file?</li>
+              <li>Is there a flexible database API?</li>
+              <li>Is there a robust web framework?</li>
+            </ul>
+            <aside class="notes" data-markdown>
+              As web programmers, we asked the usual questions. As we'll see in
+              the upcoming slides, the answers were all "yes".
+            </aside>
+          </section>
+
+          <section>
+            <h2>Why Clojure</h2>
+            <h3>
+              It's a lisp <span class="fragment fade-in highlighted-green">✓</span>
+            </h3>
+            <video height="500" controls class="fragment">
+              <source src="images/js-to-lisp-3.mp4" type="video/mp4">
+            </video>
+
+            <aside class="notes" data-markdown>
+              * list processing
+              * function position
+              * macros
+            </aside>
+          </section>
+
+          <section>
+            <h2>Why Clojure</h2>
+            <h3>
+              It's a lisp <span class="highlighted-green">✓</span>
+            </h3>
+            <h4>Aside: Clojure Syntax</h4>
+            <video height="500" controls class="fragment">
+              <source src="images/clojure-defn.mp4" type="video/mp4">
+            </video>
+            <aside class="notes" data-markdown>
+              * defines a function
+              * point out the vector
+              * lisp syntax with addition of richer data-type literals
+            </aside>
+          </section>
+        </section>
+
+
+        <section>
+          <section>
+            <h2>Why Clojure</h2>
+            <h3>
+              Can I import a gigantic data file? <span class="fragment fade-in highlighted-green">✓</span>
+            </h3>
+            <h4 class="fragment"><a target="_blank" href="http://ebird.org/content/ebird/about/">eBird</a> data set</h4>
             <ul class="task-list">
               <li class="fragment">Data for 1 year for the US region</li>
               <li class="fragment">11 GB of tab-separated values</li>
@@ -159,9 +245,11 @@
           </section>
 
           <section>
-            <h2>Premise &mdash; Back-end</h2>
-            <h3>The need for an API</h3>
+            <h2>Why Clojure</h2>
+            <h3>Can I import a gigantic data file? <span class="highlighted-green">✓</span></h3>
+            <h4>The need for an API</h4>
             <ul class="task-list">
+              <li class="fragment">Safe, quick data import</li>
               <li class="fragment">Too much data to load at once</li>
               <li class="fragment">Dynamic nature of the app</li>
               <li class="fragment">d3 handles JSON requests</li>
@@ -176,40 +264,10 @@
               this API.
             </aside>
           </section>
-        </section>
-
-
-        <section>
-          <section>
-            <h2>Why Clojure</h2>
-            <h3>It's a lisp ✓</h3>
-            <video height="500" controls class="fragment">
-              <source src="images/js-to-lisp-3.mp4" type="video/mp4">
-            </video>
-
-            <aside class="notes" data-markdown>
-              * list processing
-              * function position
-              * macros
-            </aside>
-          </section>
-
-          <section>
-            <h2>Aside: Clojure Syntax</h2>
-            <h3></h3>
-            <video height="500" controls class="fragment">
-              <source src="images/clojure-defn.mp4" type="video/mp4">
-            </video>
-            <aside class="notes" data-markdown>
-              * defines a function
-              * point out the vector
-              * lisp syntax with addition of richer data-type literals
-            </aside>
-          </section>
 
           <section>
             <h2>Why Clojure</h2>
-            <h3>Can I import a gigantic data file? ✓</h3>
+            <h3>Can I import a gigantic data file? <span class="highlighted-green">✓</span></h3>
             <pre><code>
 ;; Clojure
 
@@ -222,16 +280,21 @@
         (line-seq (io/reader filename))))))
             </code></pre>
           </section>
+        </section>
 
+
+        <section>
           <section>
             <h2>Why Clojure</h2>
-            <h3>Is there a flexible database API? ✓</h3>
+            <h3>
+              Is there a flexible database API? <span class="fragment fade-in highlighted-green">✓</span>
+            </h3>
             <img src="images/datomic.png">
           </section>
 
           <section>
             <h2>Why Clojure</h2>
-            <h3>Is there a flexible database API? ✓</h3>
+            <h3>Is there a flexible database API? <span class="highlighted-green">✓</span></h3>
             <p><strong>Datomic</strong></p>
             <ul>
               <li>Transactions</li>
@@ -240,10 +303,14 @@
               <li>Results are Clojure data structures</li>
             </ul>
           </section>
+        </section>
 
+        <section>
           <section>
             <h2>Why Clojure</h3>
-            <h3>Is there a robust web framework? ✓</h3>
+            <h3>
+              Is there a robust web framework? <span class="fragment fade-in highlighted-green">✓</span>
+            </h3>
             <p><strong>Pedestal Service</strong></p>
             <ul>
               <li>Powerful middleware system</li>
@@ -258,9 +325,10 @@
           <h2>Overview</h2>
           <ul>
             <li>Motivation</li>
-            <li>Premise -- why Clojure?</li>
-            <li class="fragment highlight-current-blue">Premise -- why ClojureScript?</li>
-            <li>d3 -- mapping and JS interoperability</li>
+            <li>Architecture</li>
+            <li>Why Clojure?</li>
+            <li class="fragment highlight-current-blue">Why ClojureScript?</li>
+            <li>d3 &mdash; mapping and JS interoperability</li>
             <li>React and Om</li>
             <li>Lessons and Insights</li>
           </ul>
@@ -438,9 +506,10 @@
           <h2>Overview</h2>
           <ul>
             <li>Motivation</li>
-            <li>Premise -- why Clojure?</li>
-            <li>Premise -- why ClojureScript?</li>
-            <li class="fragment highlight-current-blue">d3 -- mapping and JS interoperability</li>
+            <li>Architecture</li>
+            <li>Why Clojure?</li>
+            <li>Why ClojureScript?</li>
+            <li class="fragment highlight-current-blue">d3 &mdash; mapping and JS interoperability</li>
             <li>React and Om</li>
             <li>Lessons and Insights</li>
           </ul>
@@ -553,9 +622,10 @@ var months = d3.time.scale
           <h2>Overview</h2>
           <ul>
             <li>Motivation</li>
-            <li>Premise -- why Clojure?</li>
-            <li>Premise -- why ClojureScript?</li>
-            <li>d3 -- mapping and JS interoperability</li>
+            <li>Architecture</li>
+            <li>Why Clojure?</li>
+            <li>Why ClojureScript?</li>
+            <li>d3 &mdash; mapping and JS interoperability</li>
             <li class="fragment highlight-current-blue">React and Om</li>
             <li>Lessons and Insights</li>
           </ul>
@@ -716,9 +786,10 @@ var months = d3.time.scale
           <h2>Overview</h2>
           <ul>
             <li>Motivation</li>
-            <li>Premise -- why Clojure?</li>
-            <li>Premise -- why ClojureScript?</li>
-            <li>d3 -- mapping and JS interoperability</li>
+            <li>Architecture</li>
+            <li>Why Clojure?</li>
+            <li>Why ClojureScript?</li>
+            <li>d3 &mdash; mapping and JS interoperability</li>
             <li>React and Om</li>
             <li class="fragment highlight-current-blue">Lessons and Insights</li>
           </ul>
