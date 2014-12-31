@@ -55,6 +55,8 @@
 - You mentioned that “Google Closure library” was a bit of a strange name. Seems like a good opportunity to talk about the differences between clojure and closure so people get it
 - The part where you were describing how OM improved on React was a bit confusing to me. You were explaining a mental model.
 
+# Investment Friday plug
+
 # Go bigger!
 ✓ Fullscreen video
 ✓ use full screen browser mode
@@ -64,8 +66,6 @@
 ✓ Can you make Gollum bigger?
 
 ✓ Links to birdwave, blog posts
-
-# Investment Friday plug
 
 ✓ Get rid of tagline
 ✓ avoid using buzz words like "rich tools"
