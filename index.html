@@ -45,28 +45,30 @@
             John Andrews
           </h4>
           <p>
-            {:github "xandrews" :twitter "xandrews"}
+            {:github "jxa" :twitter "xandrews"}
           </p>
           <aside class="notes">
-            Thank you for coming to this talk, we value your time and are excited that you chose to share it with us.
-            And we're excited to share our experiences with you and hope that you find value from them.
-            I'm Chandu, I do app development at Neo, mostly using Rails and JavaScript. This is John Andrews.
+            Thank you for coming to this talk, we value your time and are
+            excited that you chose to share it with us. I'm Chandu, I do app
+            development at Neo, mostly using Rails and JavaScript. This is John
+            Andrews.
             <!-- John introduces himself ><!-->
+
+            ## Audience Interaction
+            Before we jump in, we'd like to get a feel for how familiar you are
+            with some of the things we're going to talk about. How many of you
+            have heard of:
+            * Birding?
+            * Clojure?
+            * ClojureScript?
+            * d3? Mapping with d3?
+            * React? Om?
+
+            Well, John and I made a thing that uses some of these things. We
+            had a lot of fun making it, and would like to talk about our
+            experiences, and hopefully give you an overview of the technologies
+            and techniques we used.
           </aside>
-        </section>
-
-
-        <section>
-          <h2>Overview</h2>
-          <ul>
-            <li class="fragment highlight-current-blue">Motivation</li>
-            <li>Architecture</li>
-            <li>Why Clojure?</li>
-            <li>Why ClojureScript?</li>
-            <li>d3 &mdash; mapping and JS interoperability</li>
-            <li>React and Om</li>
-            <li>Lessons and Insights</li>
-          </ul>
         </section>
 
 
@@ -78,10 +80,7 @@
               <small><a href="http://press.princeton.edu/birds/arlott/warbler/images/map.gif" target="_blank">Source: Princeton University</a></small>
             </div>
             <aside class="notes" data-markdown>
-              Before we jump in, I'd like to quickly introduce the project we
-              worked on. We are going to talk about it today as we show you how
-              and why we used Clojure and ClojureScript and what we've learned in
-              the process. It's called Birdwave, and it's primarily a data
+              The thing we made is called Birdwave, and it's primarily a data
               visualization. The idea of Birdwave came to me partly because of
               an interest and a hobby that I have.
 
@@ -129,106 +128,8 @@
 
 
         <section>
-          <h2>Overview</h2>
-          <ul>
-            <li>Motivation</li>
-            <li class="fragment highlight-current-blue">Architecture</li>
-            <li>Why Clojure?</li>
-            <li>Why ClojureScript?</li>
-            <li>d3 &mdash; mapping and JS interoperability</li>
-            <li>React and Om</li>
-            <li>Lessons and Insights</li>
-          </ul>
-        </section>
-
-
-        <section>
-          <h2>Architecture</h2>
-          <img src="images/bw-arch.png">
-          <aside class="notes" data-markdown>
-            The architecture we ended up with looks something like this.
-
-            * The backend consists of a database backed by Datomic and the
-            Pedestal web-service framework. It serves up the static and compiled
-            assets and also provides an API for requests from the front-end.
-
-            * The front-end uses 3rd party libraries such as d3, React and
-            enquire, and the compiled ClojureScript to provide a responsive
-            client-side application.
-          </aside>
-        </section>
-
-
-        <section>
-          <h2>Overview</h2>
-          <ul>
-            <li>Motivation</li>
-            <li>Architecture</li>
-            <li class="fragment highlight-current-blue">Why Clojure?</li>
-            <li>Why ClojureScript?</li>
-            <li>d3 &mdash; mapping and JS interoperability</li>
-            <li>React and Om</li>
-            <li>Lessons and Insights</li>
-          </ul>
-        </section>
-
-
-        <section>
           <section>
-            <h2>Why Clojure</h2>
-            <h3>Big questions</h3>
-            <ul>
-              <li>It's a Lisp!</li>
-              <li>Can it import a gigantic data file?</li>
-              <li>Is there a flexible database API?</li>
-              <li>Is there a robust web framework?</li>
-            </ul>
-            <aside class="notes" data-markdown>
-              As web programmers, we asked the usual questions. As we'll see in
-              the upcoming slides, the answers were all "yes".
-            </aside>
-          </section>
-
-          <section>
-            <h2>Why Clojure</h2>
-            <h3>
-              It's a lisp <span class="fragment fade-in highlighted-green">✓</span>
-            </h3>
-            <video height="500" controls class="fragment">
-              <source src="images/js-to-lisp-3.mp4" type="video/mp4">
-            </video>
-
-            <aside class="notes" data-markdown>
-              * list processing
-              * function position
-              * macros
-            </aside>
-          </section>
-
-          <section>
-            <h2>Why Clojure</h2>
-            <h3>
-              It's a lisp <span class="highlighted-green">✓</span>
-            </h3>
-            <h4>Aside: Clojure Syntax</h4>
-            <video height="500" controls class="fragment">
-              <source src="images/clojure-defn.mp4" type="video/mp4">
-            </video>
-            <aside class="notes" data-markdown>
-              * defines a function
-              * point out the vector
-              * lisp syntax with addition of richer data-type literals
-            </aside>
-          </section>
-        </section>
-
-
-        <section>
-          <section>
-            <h2>Why Clojure</h2>
-            <h3>
-              Can I import a gigantic data file? <span class="fragment fade-in highlighted-green">✓</span>
-            </h3>
+            <h2>Data for the App</h2>
             <h4 class="fragment"><a target="_blank" href="http://ebird.org/content/ebird/about/">eBird</a> data set</h4>
             <ul class="task-list">
               <li class="fragment">Data for 1 year for the US region</li>
@@ -241,12 +142,14 @@
               * Gather bird sighting reports from all over the world (an incredible amount of data)
               * Have a very basic API, not good for trends
               * Data available for download free for academic use
+
+              ## Audience Interaction
+              * How much data do you think that was?
             </aside>
           </section>
 
           <section>
-            <h2>Why Clojure</h2>
-            <h3>Can I import a gigantic data file? <span class="highlighted-green">✓</span></h3>
+            <h2>Data for the App</h2>
             <h4>The need for an API</h4>
             <ul class="task-list">
               <li class="fragment">Safe, quick data import</li>
@@ -260,14 +163,36 @@
               modeled with a traditional request-response cycle. There needed to
               be an API capable of rendering tailored responses to different
               parameters.
-              That's when John and Chris Westra decided to use Clojure to build
-              this API.
+              That's when John decided to use Clojure to build this API.
+            </aside>
+          </section>
+        </section>
+
+
+        <section>
+          <section>
+            <h2>Parsing the Data</h2>
+            <h4>Clojure Syntax</h4>
+            <video height="200" controls class="fragment">
+              <source src="images/js-to-lisp-3.mp4" type="video/mp4">
+            </video>
+
+            <video height="200" controls class="fragment">
+              <source src="images/clojure-defn.mp4" type="video/mp4">
+            </video>
+
+            <aside class="notes" data-markdown>
+              * list processing
+              * function position
+              * macros
+              * defines a function
+              * point out the vector
+              * lisp syntax with addition of richer data-type literals
             </aside>
           </section>
 
           <section>
-            <h2>Why Clojure</h2>
-            <h3>Can I import a gigantic data file? <span class="highlighted-green">✓</span></h3>
+            <h2>Parsing the Data</h2>
             <pre><code>
 ;; Clojure
 
@@ -279,23 +204,19 @@
       (drop (if skip-rows skip-rows 1)
         (line-seq (io/reader filename))))))
             </code></pre>
+
+            <img src="http://placekitten.com/g/500/200" alt="pipeline">
           </section>
-        </section>
 
-
-        <section>
           <section>
-            <h2>Why Clojure</h2>
-            <h3>
-              Is there a flexible database API? <span class="fragment fade-in highlighted-green">✓</span>
-            </h3>
+            <h2>Data Storage and Querying</h2>
+            <h3>Datomic</h3>
             <img src="images/datomic.png">
           </section>
 
           <section>
-            <h2>Why Clojure</h2>
-            <h3>Is there a flexible database API? <span class="highlighted-green">✓</span></h3>
-            <p><strong>Datomic</strong></p>
+            <h2>Data Storage and Querying</h2>
+            <h3>Datomic</h3>
             <ul>
               <li>Transactions</li>
               <li>History</li>
@@ -303,63 +224,99 @@
               <li>Results are Clojure data structures</li>
             </ul>
           </section>
-        </section>
 
-        <section>
           <section>
-            <h2>Why Clojure</h3>
-            <h3>
-              Is there a robust web framework? <span class="fragment fade-in highlighted-green">✓</span>
-            </h3>
-            <p><strong>Pedestal Service</strong></p>
-            <ul>
-              <li>Powerful middleware system</li>
-              <li>Routing</li>
-              <li>HTML Templating</li>
-            </ul>
+            <h2>Data Storage and Querying</h2>
+            <h3>Datomic</h3>
+            <img src="http://placekitten.com/g/500/300" alt="datomic entities">
+            <aside class="notes" data-markdown>
+              * Easy at first -- single entity per sighting
+              * Slow import, leading to...
+              * Partial data set
+            </aside>
           </section>
         </section>
 
 
         <section>
-          <h2>Overview</h2>
+          <h2>Web Service</h2>
+          <h3>Pedestal</h3>
           <ul>
-            <li>Motivation</li>
-            <li>Architecture</li>
-            <li>Why Clojure?</li>
-            <li class="fragment highlight-current-blue">Why ClojureScript?</li>
-            <li>d3 &mdash; mapping and JS interoperability</li>
-            <li>React and Om</li>
-            <li>Lessons and Insights</li>
+            <li>Powerful middleware system</li>
+            <li>Routing</li>
+            <li>HTML Templating</li>
           </ul>
         </section>
 
 
         <section>
-          <h2>Premise &mdash; Front-end</h2>
-          <h3>Got ClojureScript?</h3>
-          <p>Immediate wins:</p>
-          <ul class="task-list">
-            <li class="fragment">Easy to integrate into the existing stack</li>
-            <li class="fragment">Same language on both client and server</li>
-            <li class="fragment">Interoperability with JavaScript</li>
-          </ul>
+          <h2>Progress</h2>
+          <img src="http://placekitten.com/g/500/300" alt="arch1">
           <aside class="notes" data-markdown>
-            Now that we had a functioning API, we had to go back and take a
-            look at how to build the front-end. ClojureScript seemed like an
-            easy choice, given that we had a few immediate wins:
-
-            As we began using more of it, its value became more apparent.
-            Initially, though, it took a little getting used to.
+            _John:_
+            We had v1 of the API. Meanwhile, Chandu was starting to have some
+            success with d3 and displaying map data, so he decided to start
+            working on the client-side. Let's take a quick look at d3 and how
+            we used it.
           </aside>
         </section>
 
 
         <section>
           <section>
-            <h2>Why ClojureScript?</h2>
+            <h2>Displaying the Data</h2>
+            <img src="images/geojson.png">
+            <aside class="notes" data-markdown>
+              * Set of libraries that enable DOM manipulation based on data
+              bindings
+              * Fluent API around using functional transforms of the bound data
+              to change the state of the DOM elements
+
+              We'll quickly cover the parts relating to mapping. d3 understands
+              2 kinds of mapping data: GeoJSON and TopoJSON.
+
+              GeoJSON is a subset of JSON that encodes geographic data. Using
+              shapefiles generated from GIS mapping software, it represents
+              geometries as connected arcs. d3 can take these arcs and plot
+              SVG paths in the browser, complete with projections.
+
+              TopoJSON is a form of GeoJSON specific to topologies, meaning that
+              the arcs are aware of "inside" and "outside", and can eliminate
+              redundant arcs between adjacent geometries (such as state
+              borders).  TopoJSON payloads can be upto 80% smaller than GeoJSON
+              for the same amount of information. We used TopoJSON which
+              contained each county's name and state name bound to the geometry
+              to uniquely identify each county.
+
+              By normalizing the API to use the same key for each county as the
+              SVG, we were able to associate the county-wise sighting data with
+              the map, and as it changed month-to-month, d3 would transition the
+              elements' colors accordingly.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Displaying the Data</h2>
+            <h4>Got ClojureScript?</h4>
+            <p>Immediate wins:</p>
+            <ul class="task-list">
+              <li class="fragment">Easy to integrate into the existing stack</li>
+              <li class="fragment">Same language on both client and server</li>
+              <li class="fragment">Interoperability with JavaScript</li>
+            </ul>
+            <aside class="notes" data-markdown>
+              ClojureScript seemed like an easy choice, given that we had a few
+              immediate wins:
+
+              As we began using more of it, its value became more apparent.
+              Initially, though, it took a little getting used to.
+            </aside>
+          </section>
+
+          <section>
+            <h2>What is ClojureScript?</h2>
             <h3>Well, what <strong>is</strong> it, precious?</h3>
-            <img width="80%" src="/images/gollum.gif" alt="What is it?">
+            <img width="60%" src="/images/gollum.gif" alt="What is it?">
             <aside class="notes" data-markdown>
               When you ask most people what ClojureScript is, this is the
               reaction you seem to get. In the world of JavaScript dev, it's
@@ -371,7 +328,7 @@
           </section>
 
           <section>
-            <h2>Why ClojureScript?</h2>
+            <h2>What is ClojureScript?</h2>
             <ul class="task-list">
               <li>Compiler for Clojure to JavaScript</li>
               <li class="fragment">Emits JS optimized for the Google Closure library</li>
@@ -397,192 +354,41 @@
               we have resources at the end which list some of them. It's really
               interesting work, and has come a long way since the initial thought
               experiment.
+
+              So, the next step was to get d3 working with ClojureScript.
             </aside>
           </section>
 
           <section>
-            <h2>Why ClojureScript?</h2>
-            <h3>A Small Example</h3>
-            <img height="240" src="images/flickr-img.png">
-            <img height="240" src="images/flickr-hover1.png">
-            <img height="240" src="images/flickr-hover2.png">
-            <aside class="notes" data-markdown>
-              One of the feature requests for birdwave was to show a photo of
-              the selected bird where possible. I needed a service that could
-              take the bird name, search Flickr for images with a CC license
-              and return the first one. What I didn't need was a giant Flickr
-              library, just something simple that could build (as it turned
-              out) 2 API requests.
-            </aside>
-          </section>
-
-          <section>
-            <h2>Why ClojureScript?</h2>
-            <h3>A Small Example</h3>
-            <pre><code>
-;; ClojureScript
-(ns bird-wave.flickr (:require [cemerick.url :refer (url)]))
-
-(def api-base-url (url "https://api.flickr.com/services/rest/"))
-;;#cemerick.url.URL{:protocol "http", :username nil, :password nil, :host "google.com", :port -1, :path "", :query nil, :anchor nil}
-
-(str (assoc api-base-url :query {:api_key "my_super_flickr_key"}))
-;; https://api.flickr.com/services/rest/?api_key=my_super_flickr_key
-            </code></pre>
-            <aside class="notes" data-markdown>
-            Here's a simple example of what ClojureScript allows me to do:
-            * Query string can contain: api_key, nojsoncallback, license, search
-            * The `url` library allows me to take a string and create a URL instance
-            * I can associate a map of key values to this instance
-            * When I call `str` on it, it creates a query string with the map
-            * It made creating the long Flickr API strings a breeze
-
-            That was a simple example. On a much more advanced level, there
-            are libraries available in Clojureland the likes of which are
-            pretty hard to find in the JS ecosystem. Here's one example that
-            John's going to talk about:
-            </aside>
-          </section>
-
-          <section>
-            <h2>Why ClojureScript?</h2>
-            <h6>Two (dot-separated) words:</h6>
-            <h3 class="fragment"><code>core.async</code></h3>
-            <aside class="notes" data-markdown>
-              * powerful channel-based asynchronous programming
-              * similar to goroutines from golang
-              * turns async code into sync-looking code
-            </aside>
-          </section>
-
-          <section>
-            <h2>Why Clojurescript?</h2>
-            <h3><code>core.async</code> example</h3>
-            <pre><code>
-;; ClojureScript
-(go
-  (alt!
-    (await-taxonomy model)
-    (log "Located " (count model) " records")
-
-    (timeout 60000)
-    (log "Timed out waiting for data")))
-              </code></pre>
-
-            <aside class="notes" data-markdown>
-              * alt! is like switch for channels
-              * takes the first message from any channel
-              * timeout is builtin to core async
-              * how do we create await-taxonomy
-            </aside>
-          </section>
-
-          <section>
-            <h2>Why ClojureScript?</h2>
-            <h3><code>core.async</code> example</h3>
-            <pre><code>
-;; ClojureScript
-(defn await-taxonomy
-  "Return a channel which will receive the value of
-   :taxonomy after it has a non-empty value"
-  [model]
-  (go-loop [{:keys [taxonomy]} (deref model)]
-    (if (not-empty taxonomy)
-      taxonomy
-      (do (&lt;! (timeout 10))
-          (recur (deref model))))))
-              </code></pre>
-            <aside class="notes" data-markdown>
-              * returns a channel
-              * destructures model to retrieve taxonomy
-              * loops until non-nil taxonomy
-              * no callbacks
-            </aside>
-          </section>
-        </section>
-
-
-        <section>
-          <h2>Overview</h2>
-          <ul>
-            <li>Motivation</li>
-            <li>Architecture</li>
-            <li>Why Clojure?</li>
-            <li>Why ClojureScript?</li>
-            <li class="fragment highlight-current-blue">d3 &mdash; mapping and JS interoperability</li>
-            <li>React and Om</li>
-            <li>Lessons and Insights</li>
-          </ul>
-        </section>
-
-
-        <section>
-          <h2>Mapping with d3 and TopoJSON</h2>
-          <img src="images/geojson.png">
-          <aside class="notes" data-markdown>
-            After that mind-trip, let's shift gears and talk about d3.
-            * Set of libraries that enable DOM manipulation based on data
-            bindings
-            * Fluent API around using functional transforms of the bound data
-            to change the state of the DOM elements
-
-            We'll quickly cover the parts relating to mapping. d3 understands
-            2 kinds of mapping data: GeoJSON and TopoJSON.
-
-            GeoJSON is a subset of JSON that encodes geographic data. Using
-            shapefiles generated from GIS mapping software, it represents
-            geometries as connected arcs. d3 can take these arcs and plot
-            SVG paths in the browser, complete with projections.
-
-            TopoJSON is a form of GeoJSON specific to topologies, meaning that
-            the arcs are aware of "inside" and "outside", and can eliminate
-            redundant arcs between adjacent geometries (such as state
-            borders).  TopoJSON payloads can be upto 80% smaller than GeoJSON
-            for the same amount of information. We used TopoJSON which
-            contained each county's name and state name bound to the geometry
-            to uniquely identify each county.
-
-            By normalizing the API to use the same key for each county as the
-            SVG, we were able to associate the county-wise sighting data with
-            the map, and as it changed month-to-month, d3 would transition the
-            elements' colors accordingly.
-
-            So how did we get d3 working with ClojureScript?
-          </aside>
-        </section>
-
-
-        <section>
-          <section>
-            <h2>d3 and JavaScript Interop</h2>
+            <h2>ClojureScript and JavaScript Interop</h2>
             <h3>Methods</h3>
-            <pre>
+            <pre><code>
 // JavaScript
-            <code>
+
 var activeState = function() {
   return d3.select(".active");
 }
             </code></pre>
-            <pre>
+            <pre><code>
 ;; ClojureScript
-            <code>
+
 (defn active-state [] (.select js/d3 ".active"))
             </code></pre>
           </section>
 
           <section>
-            <h2>d3 and JavaScript Interop</h2>
+            <h2>ClojureScript and JavaScript Interop</h2>
             <h3>Properties</h3>
-            <pre>
+            <pre><code>
 // JavaScript
-            <code>
+
 var target = function() {
   return d3.event.target;
 }
             </code></pre>
-            <pre>
+            <pre><code>
 ;; ClojureScript
-            <code>
+
 (defn target [] (.-target (.-event js/d3)))
 ;; OR
 (defn target [] (.. js/d3 -event -target)
@@ -590,52 +396,64 @@ var target = function() {
           </section>
 
           <section>
-            <h2>d3 and JavaScript Interop</h2>
+            <h2>ClojureScript and JavaScript Interop</h2>
             <h3>Fluent APIs and the <code>-></code> Macro</h3>
-            <pre>
+            <pre><code>
 // JavaScript
-            <code>
+
 var months = d3.time.scale
                .domain([new Date(2012,10,15), new Date(2013,10,15)])
                .range([0, 900])
             </code></pre>
-            <pre>
+            <pre><code>
 ;; ClojureScript
-            <code>
-(def months ( -> (js/d3.time.scale)
+
+(def months ( -&gt; (js/d3.time.scale)
    (.domain (array (js/Date. 2012 10 15) (js/Date. 2013 10 15)))
    (.range (array 0 900))))
             </code></pre>
+          </section>
+        </section>
+
+
+        <section>
+          <section>
+            <h2>Progress</h2>
+            <img src="http://placekitten.com/g/500/300" alt="arch2">
+          </section>
+
+          <section>
+            <h2>We Have a Prototype! But...</h2>
+            <ul class="fragment">
+              <li>Unpolished UI</li>
+              <li>No structure to the data</li>
+              <li>The database query was slow</li>
+              <li>Differing views of end result</li>
+            </ul>
             <aside class="notes" data-markdown>
               _Chandu:_
               The fact that d3 could do DOM manipulation and event-handling let
-              us build a prototype UI rather quickly by using d3 for not just
-              the mapping but also for other interactive parts of the app, such
-              as the bird and month selectors. But I took it too far.  That's
-              when John stepped in with Om.
+              us build a prototype UI rather quickly by using d3 for both the
+              mapping as well as the other interactive parts of the app, such
+              as the bird and month selectors.
+
+              I felt like we were done. We had a working version, lots of
+              material for write-ups, some good insights. For me, ClojureScript
+              was still just a means to get d3 working, nothing more. But John
+              had other ideas!
+
+              _John:_
+              * Datomic improvements made the app faster.
+              * Dude, Om is the new hotness.
             </aside>
           </section>
         </section>
 
 
         <section>
-          <h2>Overview</h2>
-          <ul>
-            <li>Motivation</li>
-            <li>Architecture</li>
-            <li>Why Clojure?</li>
-            <li>Why ClojureScript?</li>
-            <li>d3 &mdash; mapping and JS interoperability</li>
-            <li class="fragment highlight-current-blue">React and Om</li>
-            <li>Lessons and Insights</li>
-          </ul>
-        </section>
-
-
-        <section>
           <section>
-            <h2>Richer UI with React and Om</h2>
-            <h3>Imagination Land</h3>
+            <h2>React and Om</h2>
+            <h4>Imagination Land</h4>
             <img width="80%" src="images/wonka.gif">
             <aside class="notes" data-markdown>
               _John:_
@@ -655,7 +473,7 @@ var months = d3.time.scale
           </section>
 
           <section>
-            <h2>A Component</h2>
+            <h2>An Om Component</h2>
             <video height="500" controls>
               <source src="images/birdwave-filter-list.mp4" type="video/mp4">
             </video>
@@ -783,42 +601,141 @@ var months = d3.time.scale
 
 
         <section>
-          <h2>Overview</h2>
-          <ul>
-            <li>Motivation</li>
-            <li>Architecture</li>
-            <li>Why Clojure?</li>
-            <li>Why ClojureScript?</li>
-            <li>d3 &mdash; mapping and JS interoperability</li>
-            <li>React and Om</li>
-            <li class="fragment highlight-current-blue">Lessons and Insights</li>
-          </ul>
+          <section>
+            <h2>Brainsplosion</h2>
+            <img width="80%" src="images/brainsplosion.gif">
+            <aside class="notes" data-markdown>
+              _Chandu:_
+              It took me a little while to warm up to Om and React. In the
+              beginning, it seemed like needless complexity as compared to what
+              I was used to with say something like Angular, which would just
+              bind to whatever state you already had.
+
+              But as I began to understand that I didn't need to care about
+              the component's view state, only the data it needed, I began to
+              see the simplicity of the approach. I wanted to try building a
+              component, and the perfect opportunity presented itself.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Integrating With Flickr</h2>
+            <img height="240" src="images/flickr-img.png">
+            <img height="240" src="images/flickr-hover1.png">
+            <img height="240" src="images/flickr-hover2.png">
+            <aside class="notes" data-markdown>
+              One of the feature requests for Birdwave was to show a photo of
+              the selected bird where possible. I needed a service that could
+              take the bird name, search Flickr for images with a CC license
+              and return the first one. What I didn't need was a giant Flickr
+              library, just something simple that could build (as it turned
+              out) 2 API requests.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Integrating With Flickr</h2>
+            <pre><code>
+;; ClojureScript
+(ns bird-wave.flickr (:require [cemerick.url :refer (url)]))
+
+(def api-base-url (url "https://api.flickr.com/services/rest/"))
+;;#cemerick.url.URL{:protocol "http", :username nil, :password nil, :host "google.com", :port -1, :path "", :query nil, :anchor nil}
+
+(str (assoc api-base-url :query {:api_key "my_super_flickr_key"}))
+;; https://api.flickr.com/services/rest/?api_key=my_super_flickr_key
+            </code></pre>
+            <aside class="notes" data-markdown>
+            Here's a simple example of what ClojureScript allowed me to do:
+            * Query string can contain: api_key, nojsoncallback, license, search
+            * The `url` library allows me to take a string and create a URL instance
+            * I can associate a map of key values to this instance
+            * When I call `str` on it, it creates a query string with the map
+            * It made creating the long Flickr API strings a breeze
+            </aside>
+          </section>
+
+          <section>
+            <h2>Integrating With Flickr</h2>
+            <h4>Updating the Model</h4>
+            <pre><code>
+;; ClojureScript
+
+(js/d3.json search-url (fn [data]
+  (om/update! model :photo (first-photo data))))
+;; { "photos": { "page": 1, "pages": "223", "perpage": 1, "total": "223",
+;;  "photo": [
+;;    { "id": "4769690133", "owner": "31064702@N05", "secret": "818406d0cd", "server": "4123", "farm": 5, "title": "Eastern Kingbird", "ispublic": 1, "isfriend": 0, "isfamily": 0, "ownername": "Dawn Huczek", "url_q": "https:\/\/farm5.staticflickr.com\/4123\/4769690133_818406d0cd_q.jpg", "height_q": "150", "width_q": "150" }
+;;  ] }, "stat": "ok" }
+
+(js/d3.json url (fn [data]
+  (om/update! model :attribution (attribution data))))
+;; { "photo": { "id": "4769690133", "secret": "818406d0cd", "server": "4123", "farm": 5, "dateuploaded": "1278473496", "isfavorite": 0, "license": 4, "safety_level": 0, "rotation": 0, "originalsecret": "d7072dbb9a", "originalformat": "jpg",
+;; "owner": { "nsid": "31064702@N05", "username": "Dawn Huczek", "realname": "", "location": "USA", "iconserver": "2915", "iconfarm": 3, "path_alias": "" },
+;; ...
+;; "urls": {
+;;   "url": [
+;;     { "type": "photopage", "_content": "https:\/\/www.flickr.com\/photos\/31064702@N05\/4769690133\/" }
+;;   ] }, "media": "photo" }, "stat": "ok" }
+            </code></pre>
+            <aside class="notes" data-markdown>
+              When a user selects a bird, we make the first request.
+              `search-url` is the Flickr url we need to hit. The json we get
+              back is shown under. The `first-photo` function extracts the
+              nested photo info.
+
+              When a user clicks the "view attribution" link, we make the
+              second request, and fetch the json under that. The `attribution`
+              function pulls out the username and link to the Flickr photo
+              page.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Integrating With Flickr</h2>
+            <h4>The Selection Image Component</h4>
+            <pre><code>
+;; ClojureScript
+(dom/div #js {:id "selection-image"
+              :className (if (seq model) "loaded" "no-photo")}
+   (dom/img #js {:className "photo"
+                 :src (try-with-default model :url_q "/images/loading.png")})
+   (dom/div #js {:className "attribution"}
+     (dom/h3 #js {:className "title"}
+       (try-with-default model :title "No photo available"))
+     (dom/div #js {:className "by"}
+       &hellip;
+       (if (seq (:attribution model))
+         (dom/a #js {:className "detail fetched"
+                     :href (get-in model [:attribution :url])
+                     :target "_blank"}
+                (get-in model [:attribution :by]))
+         (dom/a #js {:className "detail"
+                     :href "#"
+                     :onClick #(fetch-attribution % model)}
+                "view attribution")))))
+            </code></pre>
+          </section>
+        </section>
+
+
+        <section>
+          <h2>Progress</h2>
+          <img src="http://placekitten.com/g/500/300" alt="arch3">
+        </section>
+
+
+        <section>
+          <h2>Making the App Responsive</h2>
+          <h4>Full-stack changes</h4>
+          <img src="http://placekitten.com/g/400/300" alt="enquire-related slides">
         </section>
 
 
         <section>
           <section>
             <h2>Lessons and Insights</h2>
-            <p>Here is just a partial list of the new concepts explored during this project.</p>
-            <ul>
-              <li>Immutability </li>
-              <li>Persistent Data Structures </li>
-              <li>Datalog </li>
-              <li>Database as a value </li>
-              <li>Lazy evaluation </li>
-            </ul>
-          </section>
-
-          <section>
-            <h2>Lessons and Insights</h2>
-            <p>Here is just a partial list of the new concepts explored during this project.</p>
-            <ul>
-              <li>Communicating Sequential Processes </li>
-              <li>Lenses / Cursors </li>
-              <li>Functional DOM </li>
-              <li>Transit format </li>
-              <li>Macros </li>
-            </ul>
+            <img src="images/gollum-finds.gif" width="80%">
           </section>
 
           <section>
