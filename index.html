@@ -259,10 +259,14 @@
           <img src="http://placekitten.com/g/500/300" alt="arch1">
           <aside class="notes" data-markdown>
             _John:_
-            We had v1 of the API. Meanwhile, Chandu was starting to have some
-            success with d3 and displaying map data, so he decided to start
-            working on the client-side. Let's take a quick look at d3 and how
-            we used it.
+            We had v1 of the API complete with endpoints for retrieving sighting data
+            for a given species. The data set was so big that we were just using a partial
+            import for development. Importing the whole set meant that query became
+            less and less performant. It was time for me to go deep with my understanding of
+            Datomic.
+
+            Meanwhile, Chandu had some success spiking out a dynamic map so he decided
+            to start working on the client-side. Let's take a look at his solution.
           </aside>
         </section>
 
