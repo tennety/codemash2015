@@ -264,9 +264,9 @@
           </section>
 
           <section>
-            <h2>Data Storage and Querying</h2>
-            <h3>Datomic</h3>
+            <h2>Datomic</h2>
             <ul>
+              <li>Schema</li>
               <li>Transactional</li>
               <li>History preserving</li>
               <li>Query language <em>is</em> Clojure data</li>
@@ -282,9 +282,7 @@
           </section>
 
           <section>
-            <h2>Data Storage and Querying</h2>
-            <h3>Datomic</h3>
-
+            <h2>Datomic</h2>
             <code><pre>
 ;; clojure
 
@@ -300,8 +298,10 @@
 ;;=> [[540 108]]
             </pre></code>
 
-            <img src="http://placekitten.com/g/500/300" alt="datomic entities">
             <aside class="notes" data-markdown>
+              * Example of datomic query that finds the number of bald eagle sightings
+              * And the total eagle count for Sandusky Ohio
+              * Don't get into it... For flavor only.
               * Easy at first -- kept schema simple with a single entity per sighting
               * Slow import, leading to use of partial data set for dev
               * Talking reeeally slow... many hours.
@@ -510,6 +510,7 @@ var months = d3.time.scale
             </ul>
             <aside class="notes" data-markdown>
               _Chandu:_
+
               The fact that d3 could do DOM manipulation and event-handling let
               us build a prototype UI rather quickly by using d3 for both the
               mapping as well as the other interactive parts of the app, such
@@ -521,14 +522,14 @@ var months = d3.time.scale
               had other ideas!
 
               _John:_
+
               * Datomic improvements
-              * Don't have time to go into it here
               ** combination of splitting into species and sighting entities
               ** and partitioning the sightings by species
               * Achieved acceptable performance
               * Looking for other ways to contribute.
               * About that time there was a ton of exciting news happening in the
-                normal clojurescript channels about a new library for front-end development.
+                clojurescript channels about a new library for front-end development.
               * Dude, Om is the new hotness.
             </aside>
           </section>
@@ -539,7 +540,7 @@ var months = d3.time.scale
           <section>
             <h2>React and Om</h2>
             <h4>Imagination Land</h4>
-            <img width="80%" src="images/wonka.gif">
+            <img class="fragment" width="80%" src="images/wonka.gif">
             <aside class="notes" data-markdown>
               _John:_
               What Chandu did with D3 and the interactive maps is amazing and D3
@@ -549,7 +550,7 @@ var months = d3.time.scale
               scattering around of state and the growing complexity of dealing
               with events and coordination of state.
 
-              We wondered what a functional approach to UIs would look like.
+              We wondered what a functional approach to UIs would look like. [Next Slide]
 
               * Pretend you don't know anything about the DOM or browser enfironment
               * Unlearn the last 15 years of experience you have manipulating the DOM
@@ -562,6 +563,13 @@ var months = d3.time.scale
             <video height="500" controls>
               <source src="images/birdwave-filter-list.mp4" type="video/mp4">
             </video>
+
+            <aside class="notes" data-markdown>
+              * Here you can see a list of bird species
+              * The user can type into the search box to filter the list
+              * Up and down arrows to highlight and enter to select
+              * Here we'll just focus on the filtering functionality
+            </aside>
           </section>
 
           <section>
