@@ -196,6 +196,37 @@
             </aside>
           </section>
 
+
+          <section>
+            <h2>Parsing the Data</h2>
+            <pre><code>
+;; Clojure
+
+(def fields
+  [:sighting/guid                   ;; "GLOBAL UNIQUE IDENTIFIER"
+   :taxon/order                     ;; "TAXONOMIC ORDER"
+   nil                              ;; "CATEGORY"
+   :taxon/common-name               ;; "COMMON NAME"
+   :taxon/scientific-name           ;; "SCIENTIFIC NAME"
+   :taxon/subspecies-common-name    ;; "SUBSPECIES COMMON NAME"
+   :taxon/subspecies-scientific-name;; "SUBSPECIES SCIENTIFIC NAME"
+   :sighting/count                  ;; "OBSERVATION COUNT" ;; x indicates uncounted
+   ;; ...
+   ])
+            </code></pre>
+
+            <aside class="notes" data-markdown>
+              * the details of this aren't that important. Just need to ease you all into this whole clojure thing.
+              * Our file is tab separated values
+              * Records delimited by a newline
+              * Def fields defines a var called fields which identifies
+              * We split a line on tab characters and then compare to this vector
+              * If there is a keyword in the same position then we extract that value into a hashmap with this keyword as its key
+              * semicolons indicate comments
+              * keywords begin with a colon and contain an optional namespace
+            </aside>
+          </section>
+
           <section>
             <h2>Parsing the Data</h2>
             <pre><code>
