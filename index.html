@@ -706,7 +706,9 @@ var months = d3.time.scale
                                    (if (= model highlighted) " highlighted")
                                    (if (= model selected) " active"))}
         (dom/a #js {:href (taxon-path (:taxon/order model))
-                    :onClick (fn [e] (.preventDefault e) (put! select-ch model))}
+                    :onClick (fn [e]
+                              (.preventDefault e)
+                              (put! select-ch model))}
                (display-name model))))))
             </code></pre>
 
