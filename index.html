@@ -676,10 +676,21 @@ var months = d3.time.scale
             <pre><code>
 ;; ClojureScript
 
-(defn selection-name [name owner]
-  (om/component
-    (dom/h2 #js {:className "selection-name"} name)))
+(defn species-list [model owner]
+  (reify
+    om/IRenderState
+    (render-state [this state]
+      (apply dom/ul #js {:className "species-list"}
+             (om/build-all species-item
+                           (:filtered-list state)
+                           {:state (select-keys state [:highlighted :selected :select-ch])})))))
             </code></pre>
+
+            <aside class="notes" data-markdown>
+              * this is the om equivalent of our imaginationland component
+              * our parent component keeps a filtered-list of species that match the current filter
+              * we render a ul and then iterate over that filtered list to render each species
+            </aside>
           </section>
 
           <section>
@@ -687,12 +698,25 @@ var months = d3.time.scale
             <pre><code>
 ;; ClojureScript
 
-(defn date-minus [model owner]
-  (om/component
-    (dom/span #js {:id "date-minus"
-                   :onClick #(update-month! model owner dec)}
-              "-")))
+(defn species-item [model owner]
+  (reify
+    om/IRenderState
+    (render-state [_ {:keys [highlighted selected select-ch]}]
+      (dom/li #js {:className (str "taxon"
+                                   (if (= model highlighted) " highlighted")
+                                   (if (= model selected) " active"))}
+        (dom/a #js {:href (taxon-path (:taxon/order model))
+                    :onClick (fn [e] (.preventDefault e) (put! select-ch model))}
+               (display-name model))))))
             </code></pre>
+
+            <aside class="notes" data-markdown>
+              * here we see the species-item component
+              * onClick registers an event handler
+              * our function in this case puts our model value onto a core.async channel
+              * which was passed in by this components owner
+              * this channel is our way of passing events back up the stack to the main application controller
+            </aside>
           </section>
         </section>
 
