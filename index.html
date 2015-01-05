@@ -235,40 +235,77 @@
 (defn sighting-seq
   "Return a lazy sequence of lines from filename, transformed into sighting maps"
   [filename skip-rows nth-row]
-  (map sighting
-    (take-nth nth-row
-      (drop (if skip-rows skip-rows 1)
-        (line-seq (io/reader filename))))))
+  (->> (io/reader filename)
+       (line-seq)
+       (drop (or skip-rows 1))
+       (take-nth nth-row)
+       (map sighting)))
             </code></pre>
 
-            <img src="http://placekitten.com/g/500/200" alt="pipeline">
+            <aside class="notes" data-markdown>
+              * This example constructs a pipeline of data transformation steps
+              * beginning with a lazy sequence of lines read from the file
+              * each step is lazy
+              * returning a lazy sequence means we can take 100 records, 1000, or all of them
+              * and we'll never run out of memory because it only does the work on demand
+              * the whole collection never exists in memory at the same time.
+            </aside>
           </section>
 
           <section>
             <h2>Data Storage and Querying</h2>
             <h3>Datomic</h3>
             <img src="images/datomic.png">
+
+            <aside class="notes" data-markdown>
+              * Now that we have parsed our file into data structures we need some place to put them that's easily queried
+              * We chose to use the database conceived by Clojure's author, Rich Hickey.
+            </aside>
           </section>
 
           <section>
             <h2>Data Storage and Querying</h2>
             <h3>Datomic</h3>
             <ul>
-              <li>Transactions</li>
-              <li>History</li>
-              <li>Query language <em>is</em> Clojure</li>
+              <li>Transactional</li>
+              <li>History preserving</li>
+              <li>Query language <em>is</em> Clojure data</li>
               <li>Results are Clojure data structures</li>
+              <li>Query is executed in application server</li>
             </ul>
+
+            <aside class="notes" data-markdown>
+              * We didn't particularly need transactions or history for this application
+              * but we were curious and wanted to experience using this new technology
+              * and we liked the fact that query would scale horizontally with the application.
+            </aside>
           </section>
 
           <section>
             <h2>Data Storage and Querying</h2>
             <h3>Datomic</h3>
+
+            <code><pre>
+;; clojure
+
+(q '[:find (sum ?count) (count ?e)
+     :where
+     [?t :taxon/order "2881"]
+     [?e :sighting/taxon ?t]
+     [?e :sighting/state "Ohio"]
+     [?e :sighting/county "Sandusky"]
+     [?e :sighting/count ?count]]
+   (db conn))
+
+;;=> [[540 108]]
+            </pre></code>
+
             <img src="http://placekitten.com/g/500/300" alt="datomic entities">
             <aside class="notes" data-markdown>
-              * Easy at first -- single entity per sighting
-              * Slow import, leading to...
-              * Partial data set
+              * Easy at first -- kept schema simple with a single entity per sighting
+              * Slow import, leading to use of partial data set for dev
+              * Talking reeeally slow... many hours.
+              * But it was enough data to get started on a web service
             </aside>
           </section>
         </section>
