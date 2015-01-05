@@ -639,12 +639,18 @@ var months = d3.time.scale
           </section>
 
           <section>
-            <h2>We Don't Live in Imagination Land</h2>
-            <ul>
-              <li>Replacing entire swaths of dom is slow</li>
-              <li>No data structures</li>
-              <li>Nobody does this in real life</li>
-            </ul>
+            <h2>Browserland</h2>
+            <h3>We Don't Live in Imagination Land</h3>
+            <img width="80%" src="images/browserland.jpg">
+
+            <aside class="notes" data-markdown>
+              * Sadly we don't live in our imaginationland
+              * the reality of the browser is more like south park's imaginationland
+              * no data structures. no progression of dom values
+              * Replacing entire swaths of dom is slow - nobody does this
+              * people resort to string concatenation
+              * it is left to the application programmer to manage all of this complexity
+            </aside>
           </section>
 
           <section>
@@ -654,14 +660,28 @@ var months = d3.time.scale
               <li>React takes care of the details</li>
               <li>Keeps real DOM in sync with your ideal DOM</li>
             </ul>
+
+            <aside class="notes" data-markdown>
+              * React gets us close to imaginationland
+              * Library released by facebook
+              * react renders the dom.
+              * when you update the dom it does a diff with the previous version
+              * then it only performs the minimal set of dom manipulations necessary to achieve the desired structure.
+            </aside>
           </section>
 
           <section>
             <h2>Om</h2>
             <ul>
               <li>Builds upon react</li>
-              <li>Leverages immutability</li>
+              <li>Leverages ClojureScript's immutability</li>
             </ul>
+
+            <aside class="notes" data-markdown>
+              Om is a library which uses react and extends it with some powerful concepts. Because it uses clojurescripts
+              persistent data structures it is able to achieve better out-of-the box performance than React itself.
+              Let's see an example.
+            </aside>
           </section>
 
           <section>
