@@ -897,9 +897,92 @@ var months = d3.time.scale
 
 
         <section>
-          <h2>Making the App Responsive</h2>
-          <h4>Putting it all together</h4>
-          <img src="http://placekitten.com/g/500/300" alt="enquire-related slides">
+          <section>
+            <h2>Adding Responsiveness</h2>
+            <video height="500" controls>
+              <source src="images/responsive.mp4" type="video/mp4">
+            </video>
+          </section>
+
+          <section>
+            <h2>Adding Responsiveness</h2>
+            <ul>
+              <li>CSS is not enough</li>
+              <li>Screen size <em>is</em> user input</li>
+            </ul>
+          </section>
+
+          <section data-markdown>
+            ## Adding Responsiveness
+            #### Client changes
+
+            * Detect and store screen size in app state
+              - xs: 0px &lt; width &lt;= 520px
+              - sm: 520px &lt; width &lt;= 768px
+              - md: 768px &lt; width &lt;= 1024px
+              - lg: 1024px &lt; width
+          </section>
+
+          <section>
+            <h2>Adding Responsiveness</h2>
+            <pre><code>
+;; ClojureScript
+
+(defn watch-screen-size [model]
+  (let [size-handler (fn [size]  #(swap! model assoc :screen-size size))]
+    (-> js/enquire
+      (.register "screen and (min-width: 0px) and (max-width: 520px)"    (size-handler "xs"))
+      (.register "screen and (min-width: 521px) and (max-width: 768px)"  (size-handler "sm"))
+      (.register "screen and (min-width: 769px) and (max-width: 1024px)" (size-handler "md"))
+      (.register "screen and (min-width: 1025px)"                        (size-handler "lg")))))
+            </code></pre>
+          </section>
+
+          <section data-markdown>
+            ## Adding Responsiveness
+            #### Client changes
+            * Update necessary components to render accordingly
+              - Map renders states vs counties on md, sm, xs
+              - Photo does not render on md, sm, xs
+              - Slider changes to select widget on sm, xs
+            * Update ajax calls
+              - Map data
+              - API requests
+          </section>
+
+          <section>
+            <h2>Adding Responsiveness</h2>
+            <pre><code>
+;; ClojureScript
+
+;; display the slider on large screens, and the select widget on small
+(if (contains? #{"lg" "md"} (:screen-size model))
+  (om/build date-slider model {:state {:time-period-ch time-period-ch}})
+  (om/build date-select model {:state {:time-period-ch time-period-ch}}))
+            </code></pre>
+          </section>
+
+          <section data-markdown>
+            ## Adding Responsiveness
+            #### Server changes
+
+            * Handle query parameters on API requests
+            * Add queries to return data aggregated by state vs county
+          </section>
+        </section>
+
+
+        <section>
+          <section>
+            <h2>Progress</h2>
+            <img src="images/bw-be.png" alt="the api">
+            <img class="fragment" src="images/bw-fe-v3.png" alt="the api">
+          </section>
+
+          <section>
+            <h2>Ship It!</h2>
+            <img src="images/ship.jpg">
+          </section>
         </section>
 
 
@@ -909,6 +992,7 @@ var months = d3.time.scale
             #### Birding
             * [eBird.org](http://ebird.org)
             * [Cornell Lab of Ornithology](http://birds.cornell.edu)
+            * [Birding portal by Cornell](http://allaboutbirds.org)
           </section>
 
           <section data-markdown>
@@ -928,11 +1012,11 @@ var months = d3.time.scale
 
           <section data-markdown>
             ## Resources
+
             ### d3
             * [d3js Home page](http://d3js.org/)
             * [Scott Murray's tutorials](http://alignedleft.com/tutorials/d3)...
             * ... [and his book](http://chimera.labs.oreilly.com/books/1230000000345/)
-            #### Mapping
             * [Mike Bostock's simple map example](http://bl.ocks.org/mbostock/4136647)
             * [Building a Choropleth](http://bost.ocks.org/mike/map/)
             * [Play with GeoJSON](http://geojson.io/#map=2/20.0/0.0)
