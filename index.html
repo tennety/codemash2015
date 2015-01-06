@@ -238,7 +238,7 @@
 (defn sighting-seq
   "Return a lazy sequence of lines from filename, transformed into sighting maps"
   [filename skip-rows nth-row]
-  (->> (io/reader filename)
+  (-&gt;&gt; (io/reader filename)
        (line-seq)
        (drop (or skip-rows 1))
        (take-nth nth-row)
@@ -298,7 +298,7 @@
      [?e :sighting/count ?count]]
    (db conn))
 
-;;=> [[540 108]]
+;;=&gt; [[540 108]]
             </code></pre>
 
             <aside class="notes" data-markdown>
@@ -478,7 +478,7 @@ var target = function() {
 
           <section>
             <h2>ClojureScript and JavaScript Interop</h2>
-            <h3>Fluent APIs and the <code>-></code> Macro</h3>
+            <h3>Fluent APIs and the <code>-&gt;</code> Macro</h3>
             <pre><code>
 // JavaScript
 
@@ -941,7 +941,7 @@ var months = d3.time.scale
 
 (defn watch-screen-size [model]
   (let [size-handler (fn [size]  #(swap! model assoc :screen-size size))]
-    (-> js/enquire
+    (-&gt; js/enquire
       (.register "screen and (min-width: 0px) and (max-width: 520px)"    (size-handler "xs"))
       (.register "screen and (min-width: 521px) and (max-width: 768px)"  (size-handler "sm"))
       (.register "screen and (min-width: 769px) and (max-width: 1024px)" (size-handler "md"))
