@@ -170,11 +170,25 @@
           <section>
             <h2>Clojure Syntax</h2>
 
-            <video controls>
-              <source src="images/greetings-codemash.mp4" type="video/mp4">
-            </video>
+            <pre><code class="javascript">
+/* JavaScript */
+function greet(who, event) {
+  return "Greetings " + who + "! Welcome to " + event "!";
+}
+
+greet("Good People", "Codemash");
+              </code></pre>
+
+            <pre class="fragment"><code class="clojure">
+;; Clojure
+(defn greet [who event]
+  (str "Greetings " who "! Welcome to " event "!"))
+
+(greet "Good People" "Codemash")
+            </code></pre>
 
             <aside class="notes" data-markdown>
+              * Let's compare with something familiar, javascript.
               * clojure is a lisp
               * function position
               * lisp's simplicity is purposeful. because it's code is a data structure,
@@ -182,6 +196,13 @@
               * macros - code that writes code
               * clojure uses the basic lisp syntax with addition of richer data-type literals
             </aside>
+          </section>
+
+          <section>
+            <h2>Clojure Syntax</h2>
+            <video controls>
+              <source src="images/greetings-codemash.mp4" type="video/mp4">
+            </video>
           </section>
 
           <section>
@@ -1083,7 +1104,6 @@ var months = d3.time.scale
         // , { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
         ]
         });
-
       </script>
 
     </body>
