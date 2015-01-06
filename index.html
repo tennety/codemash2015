@@ -168,26 +168,37 @@
 
         <section>
           <section>
-            <h2>Parsing the Data</h2>
-            <h4>Clojure Syntax</h4>
-            <video height="200" controls>
-              <source src="images/js-to-lisp-3.mp4" type="video/mp4">
-            </video>
+            <h2>Clojure Syntax</h2>
 
-            <video height="200" controls>
-              <source src="images/clojure-defn.mp4" type="video/mp4">
+            <video controls>
+              <source src="images/greetings-codemash.mp4" type="video/mp4">
             </video>
 
             <aside class="notes" data-markdown>
-              * list processing
+              * clojure is a lisp
               * function position
-              * macros
-              * defines a function
-              * point out the vector
-              * lisp syntax with addition of richer data-type literals
+              * lisp's simplicity is purposeful. because it's code is a data structure,
+                a so called s-expression, it's possible to write very powerful macros
+              * macros - code that writes code
+              * clojure uses the basic lisp syntax with addition of richer data-type literals
             </aside>
           </section>
 
+          <section>
+            <h2>Clojure Syntax</h2>
+            <ul>
+              <li><code class="clojure">()</code> List</li>
+              <li><code class="clojure">[]</code> Vector</li>
+              <li><code class="clojure">{}</code> Map</li>
+            </ul>
+            <aside class="notes" data-markdown>
+              * clojure code is all made of lists
+              * vectors are like lists but allow constant time random access like arrays
+              * maps are associative datastructures, like Hashes in Ruby, or Objects in Javascript. Except you can use any type of value as a key in clojure's maps
+              * many more built-in types. we may point out some of them as we go along.
+              * now let's take a look at some birdwave code.
+            </aside>
+          </section>
 
           <section>
             <h2>Parsing the Data</h2>
