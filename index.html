@@ -40,14 +40,14 @@
           <h3>John Andrews</h3>
           <p><small><code>{:github "jxa" :twitter "xandrews"}</code></small></p>
           <img src="images/NEO_LOGO_GREEN.png" height="60px">
-          <aside class="notes">
+          <aside class="notes" data-markdown>
             Thank you for coming to this talk, we value your time and are
             excited that you chose to share it with us. I'm Chandu, I do app
             development at Neo, mostly using Rails and JavaScript. This is John
             Andrews.
 
-            Hi I'm John, formerly of Neo. Currently I'm an application developer
-            at LendingHome, an online mortgage marketplace. Most of my work is
+            Hi I'm John Andrews. I used to work with Chandu at Neo.
+            Currently I'm an engineer at LendingHome, an online mortgage marketplace. Most of my work is
             done in Ruby and Javascript, however I've been creating things with
             Clojure for several years.
 
@@ -55,13 +55,14 @@
             Before we jump in, we'd like to get a feel for how familiar you are
             with some of the things we're going to talk about. How many of you
             have heard of:
+
             * Birding?
             * Clojure?
             * ClojureScript?
             * d3? Mapping with d3?
             * React? Om?
 
-            Well, John and I made a thing that uses some of these things. We
+            Well, John and I made a thing that uses all of these things and more. We
             had a lot of fun making it, and would like to talk about our
             experiences, and hopefully give you an overview of the technologies
             and techniques we used.
@@ -241,7 +242,7 @@ greet("Good People", "Codemash");
 
             <aside class="notes" data-markdown>
               * the details of this aren't that important. Just need to ease you all into this whole clojure thing.
-              * Our file is tab separated values
+              * Our file of bird sightings is tab separated values
               * Records delimited by a newline
               * Def fields defines a var called fields which identifies
               * We split a line on tab characters and then compare to this vector
@@ -277,7 +278,7 @@ greet("Good People", "Codemash");
           </section>
 
           <section>
-            <h2>Data Storage and Querying</h2>
+            <h2>Data Storage and Query</h2>
             <h3>Datomic</h3>
             <img src="images/datomic.png">
 
@@ -633,7 +634,7 @@ var months = d3.time.scale
 
 (map species-li all-species)
             </code></pre>
-            <aside class="notes">
+            <aside class="notes" data-markdown>
               In imagination land the most straightforward way to render this list is to
               iterate over our data, building up our list as we go. Then when the list is built
               we replace old dom with our new representation. And our job is done.
@@ -652,7 +653,7 @@ var months = d3.time.scale
 (map species-li
      (filter (match-string "black-thr") species))
             </code></pre>
-            <aside class="notes">
+            <aside class="notes" data-markdown>
               User types in some filter text. On each keystroke we match against the list.
             </aside>
           </section>
