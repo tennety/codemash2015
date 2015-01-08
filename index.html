@@ -680,8 +680,9 @@ var months = d3.time.scale
               * the reality of the browser is more like south park's imaginationland
               * no data structures. no progression of dom values
               * Replacing entire swaths of dom is slow - nobody does this
-              * people resort to string concatenation
+              * instead, best practice is to replace only the bits that need to change
               * it is left to the application programmer to manage all of this complexity
+              * frameworks like ember and angular shift this complexity to KVO - also complex!
             </aside>
           </section>
 
@@ -695,9 +696,10 @@ var months = d3.time.scale
 
             <aside class="notes" data-markdown>
               * React gets us close to imaginationland
-              * Library released by facebook
-              * react renders the dom.
-              * when you update the dom it does a diff with the previous version
+              * open source library released by facebook
+              * your application renders a virtual-dom, which is just data
+              * react renders the real dom.
+              * when you render a new virtual dom, react does a diff with the previous version
               * then it only performs the minimal set of dom manipulations necessary to achieve the desired structure.
             </aside>
           </section>
